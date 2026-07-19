@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module 2 Lesson 1 - Health & Safety in the Workplace</title>
+    <style>
+        /* --- Google Font Import --- */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+        /* --- CSS Variables for Easy Theming --- */
+        :root {
+            --primary-color: #20B2AA;
+            --secondary-color: #008B8B;
+            --background-color: #f4f7f9;
+            --text-color: #333;
+            --light-gray-color: #e9ecef;
+            --white-color: #ffffff;
+            --success-color: #28a745;
+            --danger-color: #dc3545;
+            --font-family: 'Poppins', sans-serif;
+        }
+
+        /* --- General Body & Reset Styles --- */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background-color: var(--background-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            /* Allow vertical scrolling on mobile */
+        }
+
+        /* --- Main Course Container - RESPONSIVE SCREEN --- */
+        .course-container {
+            width: 100%;
+            min-height: 100vh;
+            background: var(--white-color);
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* --- Header --- */
+        header {
+            padding: 20px 40px;
+            border-bottom: 1px solid var(--light-gray-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-shrink: 0;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+        .logo span {
+            font-weight: 300;
+        }
+
+        .course-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            background-color: var(--primary-color);
+            color: var(--white-color);
+            padding: 12px 25px;
+            border-radius: 25px;
+            text-align: center;
+            white-space: nowrap;
+        }
+
+        /* --- Main Content Area --- */
+        main {
+            flex-grow: 1;
+            padding: 50px 60px;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .lesson-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .lesson-header h1 {
+            font-size: 3.2rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            line-height: 1.2;
+        }
+
+        .lesson-header h2 {
+            font-size: 2rem;
+            color: var(--secondary-color);
+            font-weight: 400;
+            line-height: 1.3;
+        }
+
+        /* Image Hotspot Interaction */
+        .workplace-image-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .workplace-illustration {
+            width: 100%;
+            height: 400px;
+            background: linear-gradient(45deg, #f1f3f4, #ffffff);
+            border-radius: 15px;
+            position: relative;
+            border: 2px solid var(--light-gray-color);
+            overflow: hidden;
+        }
+
+        .workplace-illustration::before {
+            content: "🏢 WORKPLACE ENVIRONMENT";
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #6c757d;
+            z-index: 1;
+            text-align: center;
+            width: 100%;
+        }
+
+        .hotspot {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background-color: var(--primary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(32, 178, 170, 0.4);
+            z-index: 10;
+        }
+
+        .hotspot::before {
+            content: '+';
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .hotspot:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(32, 178, 170, 0.6);
+        }
+
+        .hotspot.active {
+            background-color: var(--secondary-color);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(32, 178, 170, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(32, 178, 170, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(32, 178, 170, 0); }
+        }
+
+        /* Hotspot Positions */
+        .hotspot.physical { top: 20%; left: 15%; }
+        .hotspot.chemical { top: 30%; right: 20%; }
+        .hotspot.ergonomic { bottom: 25%; left: 25%; }
+        .hotspot.biological { top: 50%; left: 50%; }
+        .hotspot.psychosocial { bottom: 20%; right: 15%; }
+
+        /* Pop-up Box */
+        .popup-box {
+            position: absolute;
+            background: var(--white-color);
+            border: 3px solid var(--primary-color);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+            max-width: 350px;
+            z-index: 20;
+            opacity: 0;
+            transform: scale(0.8);
+            transition: all 0.4s ease;
+            pointer-events: none;
+        }
+
+        .popup-box.active {
+            opacity: 1;
+            transform: scale(1);
+            pointer-events: all;
+        }
+
+        .popup-header {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .popup-icon {
+            margin-right: 10px;
+            font-size: 1.5rem;
+        }
+
+        .popup-content {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: var(--text-color);
+            word-wrap: break-word;
+        }
+
+        .close-popup {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: #999;
+            cursor: pointer;
+            transition: color 0.2s ease;
+            min-width: 30px;
+            min-height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .close-popup:hover {
+            color: var(--danger-color);
+        }
+
+        /* --- Footer & Navigation --- */
+        footer {
+            padding: 20px 40px;
+            border-top: 1px solid var(--light-gray-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-shrink: 0;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .navigation-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .navigation-buttons button {
+            background-color: var(--primary-color);
+            color: var(--white-color);
+            border: none;
+            padding: 15px 35px;
+            border-radius: 25px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            text-decoration: none;
+            display: inline-block;
+            min-width: 160px;
+            text-align: center;
+        }
+
+        .navigation-buttons button:hover {
+            background-color: var(--secondary-color);
+            transform: scale(1.05);
+        }
+
+        .navigation-buttons a {
+            text-decoration: none;
+        }
+
+        #prev-btn {
+            background-color: #6c757d;
+        }
+        #prev-btn:hover {
+            background-color: #5a6268;
+        }
+
+        .lesson-info {
+            font-size: 1.1rem;
+            color: #6c757d;
+            font-weight: 500;
+        }
+
+        /* --- ENHANCED RESPONSIVE DESIGN --- */
+
+        /* Large Desktop (1200px+) */
+        @media (min-width: 1200px) {
+            main {
+                padding: 60px 80px;
+            }
+            
+            .lesson-header h1 {
+                font-size: 3.5rem;
+            }
+            
+            .lesson-header h2 {
+                font-size: 2.2rem;
+            }
+            
+            .workplace-image-container {
+                padding: 50px;
+                max-width: 1200px;
+            }
+            
+            .workplace-illustration {
+                height: 450px;
+            }
+            
+            .workplace-illustration::before {
+                font-size: 1.3rem;
+            }
+            
+            .hotspot {
+                width: 55px;
+                height: 55px;
+            }
+            
+            .popup-box {
+                max-width: 400px;
+                padding: 30px;
+            }
+            
+            .popup-header {
+                font-size: 1.4rem;
+            }
+            
+            .popup-content {
+                font-size: 1.2rem;
+            }
+        }
+
+        /* Desktop (992px - 1199px) */
+        @media (max-width: 1199px) and (min-width: 992px) {
+            main {
+                padding: 50px 60px;
+            }
+            
+            .lesson-header h1 {
+                font-size: 3.2rem;
+            }
+            
+            .lesson-header h2 {
+                font-size: 2rem;
+            }
+        }
+
+        /* Tablet Landscape (768px - 991px) */
+        @media (max-width: 991px) and (min-width: 768px) {
+            header {
+                padding: 20px 30px;
+            }
+            
+            main {
+                padding: 40px 50px;
+            }
+            
+            .lesson-header h1 {
+                font-size: 2.8rem;
+            }
+            
+            .lesson-header h2 {
+                font-size: 1.8rem;
+            }
+            
+            .workplace-image-container {
+                padding: 35px;
+            }
+            
+            .workplace-illustration {
+                height: 350px;
+            }
+            
+            .workplace-illustration::before {
+                font-size: 1.1rem;
+                top: 15px;
+            }
+            
+            .hotspot {
+                width: 45px;
+                height: 45px;
+            }
+            
+            .hotspot::before {
+                font-size: 1.3rem;
+            }
+            
+            .popup-box {
+                max-width: 320px;
+                padding: 22px;
+            }
+            
+            .popup-header {
+                font-size: 1.2rem;
+            }
+            
+            .popup-content {
+                font-size: 1.05rem;
+            }
+        }
+
+        /* Tablet Portrait & Large Mobile (576px - 767px) */
+        @media (max-width: 767px) and (min-width: 576px) {
+            header {
+                padding: 18px 25px;
+                flex-direction: column;
+                text-align: center;
+                gap: 10px;
+            }
+            
+            .logo {
+                font-size: 1.6rem;
+            }
+            
+            .course-title {
+                font-size: 1.1rem;
+                padding: 10px 20px;
+                white-space: normal;
+                max-width: 100%;
+            }
+            
+            main {
+                padding: 35px 30px;
+            }
+            
+            .lesson-header {
+                margin-bottom: 30px;
+            }
+            
+            .lesson-header h1 {
+                font-size: 2.4rem;
+                margin-bottom: 12px;
+            }
+            
+            .lesson-header h2 {
+                font-size: 1.6rem;
+            }
+            
+            .workplace-image-container {
+                padding: 25px;
+            }
+            
+            .workplace-illustration {
+                height: 300px;
+            }
+            
+            .workplace-illustration::before {
+                font-size: 1rem;
+                top: 12px;
+            }
+            
+            .hotspot {
+                width: 40px;
+                height: 40px;
+            }
+            
+            .hotspot::before {
+                font-size: 1.2rem;
+            }
+            
+            .popup-box {
+                max-width: 280px;
+                padding: 20px;
+            }
+            
+            .popup-header {
+                font-size: 1.1rem;
+            }
+            
+            .popup-content {
+                font-size: 1rem;
+            }
+            
+            footer {
+                padding: 18px 25px;
+                flex-direction: column;
+                text-align: center;
+                gap: 15px;
+            }
+            
+            .navigation-buttons {
+                justify-content: center;
+                width: 100%;
+            }
+            
+            .navigation-buttons button {
+                font-size: 1.1rem;
+                padding: 12px 25px;
+                min-width: 160px;
+            }
+        }
+
+        /* Mobile (320px - 575px) */
+        @media (max-width: 575px) {
+            header {
+                padding: 15px 20px;
+                flex-direction: column;
+                text-align: center;
+                gap: 10px;
+            }
+            
+            .logo {
+                font-size: 1.5rem;
+            }
+            
+            .course-title {
+                font-size: 1rem;
+                padding: 8px 16px;
+                white-space: normal;
+                max-width: 100%;
+                line-height: 1.4;
+            }
+            
+            main {
+                padding: 25px 20px;
+            }
+            
+            .lesson-header {
+                margin-bottom: 25px;
+            }
+            
+            .lesson-header h1 {
+                font-size: 2rem;
+                margin-bottom: 10px;
+            }
+            
+            .lesson-header h2 {
+                font-size: 1.4rem;
+            }
+            
+            .workplace-image-container {
+                padding: 20px;
+                border-radius: 15px;
+            }
+            
+            .workplace-illustration {
+                height: 280px;
+                border-radius: 12px;
+            }
+            
+            .workplace-illustration::before {
+                font-size: 0.9rem;
+                top: 10px;
+            }
+            
+            .hotspot {
+                width: 40px;
+                height: 40px;
+                box-shadow: 0 4px 20px rgba(32, 178, 170, 0.6);
+            }
+            
+            .hotspot::before {
+                font-size: 1.1rem;
+            }
+            
+            /* Enhanced mobile hotspot positioning */
+            .hotspot.physical { top: 20%; left: 15%; }
+            .hotspot.chemical { top: 25%; right: 15%; }
+            .hotspot.ergonomic { bottom: 25%; left: 20%; }
+            .hotspot.biological { top: 50%; left: 50%; transform: translate(-50%, -50%); }
+            .hotspot.psychosocial { bottom: 20%; right: 20%; }
+            
+            .popup-box {
+                position: fixed;
+                left: 10px !important;
+                right: 10px !important;
+                top: auto !important;
+                bottom: 120px !important;
+                max-width: none;
+                width: auto;
+                padding: 20px;
+                border-radius: 12px;
+                transform: scale(0.8);
+                margin: 0;
+                z-index: 1000;
+            }
+            
+            .popup-box.active {
+                transform: scale(1);
+            }
+            
+            .popup-header {
+                font-size: 1.1rem;
+                margin-bottom: 12px;
+                padding-right: 30px;
+            }
+            
+            .popup-content {
+                font-size: 1rem;
+                line-height: 1.5;
+            }
+            
+            .close-popup {
+                min-width: 44px;
+                min-height: 44px;
+                font-size: 1.4rem;
+                top: 8px;
+                right: 8px;
+                background: rgba(255, 255, 255, 0.9);
+                border-radius: 50%;
+            }
+            
+            footer {
+                padding: 15px 20px;
+                flex-direction: column;
+                text-align: center;
+                gap: 12px;
+            }
+            
+            .lesson-info {
+                font-size: 1rem;
+                order: 2;
+            }
+            
+            .navigation-buttons {
+                order: 1;
+                justify-content: center;
+                width: 100%;
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .navigation-buttons button {
+                font-size: 1rem;
+                padding: 12px 20px;
+                width: 100%;
+                max-width: 250px;
+                margin: 0 auto;
+            }
+        }
+
+        /* Extra Small Mobile (Below 320px) */
+        @media (max-width: 319px) {
+            .lesson-header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .lesson-header h2 {
+                font-size: 1.3rem;
+            }
+            
+            .workplace-image-container {
+                padding: 15px;
+            }
+            
+            .workplace-illustration {
+                height: 220px;
+            }
+            
+            .hotspot {
+                width: 30px;
+                height: 30px;
+            }
+            
+            .hotspot::before {
+                font-size: 0.9rem;
+            }
+            
+            .popup-box {
+                max-width: 240px;
+                padding: 15px;
+            }
+            
+            .popup-header {
+                font-size: 0.95rem;
+            }
+            
+            .popup-content {
+                font-size: 0.9rem;
+            }
+        }
+
+        /* Touch Device Optimizations */
+        @media (hover: none) and (pointer: coarse) {
+            .hotspot {
+                min-width: 44px;
+                min-height: 44px;
+            }
+            
+            .hotspot:hover {
+                transform: none;
+                box-shadow: 0 4px 15px rgba(32, 178, 170, 0.4);
+            }
+            
+            .navigation-buttons button:hover {
+                transform: none;
+            }
+            
+            .close-popup {
+                min-width: 44px;
+                min-height: 44px;
+            }
+        }
+
+        /* High DPI Displays */
+        @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx) {
+            .hotspot::before {
+                font-weight: 600;
+            }
+        }
+
+        /* Landscape Mobile Orientation */
+        @media (max-width: 767px) and (orientation: landscape) {
+            .lesson-header h1 {
+                font-size: 2.2rem;
+            }
+            
+            .lesson-header h2 {
+                font-size: 1.5rem;
+            }
+            
+            main {
+                padding: 20px 25px;
+            }
+            
+            .lesson-header {
+                margin-bottom: 20px;
+            }
+            
+            .workplace-illustration {
+                height: 280px;
+            }
+        }
+
+        /* Accessibility: Reduced Motion */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+            
+            .hotspot {
+                animation: none;
+            }
+        }
+
+        /* Print Styles */
+        @media print {
+            .course-container {
+                background: white;
+            }
+            
+            header, footer {
+                display: none;
+            }
+            
+            .popup-box {
+                position: static !important;
+                opacity: 1 !important;
+                transform: none !important;
+                margin: 10px 0;
+                max-width: 100%;
+                page-break-inside: avoid;
+            }
+            
+            .close-popup {
+                display: none;
+            }
+            
+            .hotspot {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="course-container">
+        <header>
+            <div class="logo">Skill<span>Trail</span></div>
+            <div class="course-title">Health & Safety in the Workplace</div>
+        </header>
+
+        <main>
+            <div class="lesson-header">
+                <h1>Module 2: Identifying Workplace Hazards</h1>
+                <h2>Lesson 1: Common Workplace Hazards (Physical, Chemical, Ergonomic, Biological, and Psychosocial)</h2>
+            </div>
+
+            <div class="workplace-image-container">
+                <div class="workplace-illustration">
+                    <!-- Physical Hazards Hotspot -->
+                    <div class="hotspot physical" data-hazard="physical"></div>
+                    
+                    <!-- Chemical Hazards Hotspot -->
+                    <div class="hotspot chemical" data-hazard="chemical"></div>
+                    
+                    <!-- Ergonomic Hazards Hotspot -->
+                    <div class="hotspot ergonomic" data-hazard="ergonomic"></div>
+                    
+                    <!-- Biological Hazards Hotspot -->
+                    <div class="hotspot biological" data-hazard="biological"></div>
+                    
+                    <!-- Psychosocial Hazards Hotspot -->
+                    <div class="hotspot psychosocial" data-hazard="psychosocial"></div>
+
+                    <!-- Pop-up Boxes -->
+                    <div class="popup-box" id="popup-physical" style="top: 10%; left: 5%;">
+                        <button class="close-popup">&times;</button>
+                        <div class="popup-header">
+                            <span class="popup-icon">⚡</span>
+                            Physical hazards
+                        </div>
+                        <div class="popup-content">
+                            These include slips, trips, falls, noise, vibration, and unsafe machinery. They are the most common workplace hazards and can cause immediate injury if not controlled.
+                        </div>
+                    </div>
+
+                    <div class="popup-box" id="popup-chemical" style="top: 20%; right: 5%;">
+                        <button class="close-popup">&times;</button>
+                        <div class="popup-header">
+                            <span class="popup-icon">🧪</span>
+                            Chemical hazards
+                        </div>
+                        <div class="popup-content">
+                            Exposure to cleaning agents, fumes, or toxic substances can harm skin, eyes, or lungs. Safe storage, labelling, and handling procedures reduce these risks.
+                        </div>
+                    </div>
+
+                    <div class="popup-box" id="popup-ergonomic" style="bottom: 15%; left: 5%;">
+                        <button class="close-popup">&times;</button>
+                        <div class="popup-header">
+                            <span class="popup-icon">💺</span>
+                            Ergonomic hazards
+                        </div>
+                        <div class="popup-content">
+                            Poor posture, repetitive movements, or inadequate workstation design can cause strain, fatigue, and musculoskeletal problems over time.
+                        </div>
+                    </div>
+
+                    <div class="popup-box" id="popup-biological" style="top: 40%; left: 40%;">
+                        <button class="close-popup">&times;</button>
+                        <div class="popup-header">
+                            <span class="popup-icon">🦠</span>
+                            Biological hazards
+                        </div>
+                        <div class="popup-content">
+                            Viruses, bacteria, mould, or other microorganisms can spread illness in certain workplaces, especially healthcare, cleaning, or food industries.
+                        </div>
+                    </div>
+
+                    <div class="popup-box" id="popup-psychosocial" style="bottom: 10%; right: 5%;">
+                        <button class="close-popup">&times;</button>
+                        <div class="popup-header">
+                            <span class="popup-icon">🧠</span>
+                            Psychosocial hazards
+                        </div>
+                        <div class="popup-content">
+                            Stress, harassment, long hours, or poor communication can negatively impact mental health and performance. These are just as important to address as physical risks.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <div class="lesson-info">Module 2 - Lesson 1</div>
+            <div class="navigation-buttons">
+                <a href="index.html"><button id="prev-btn">Back to Main</button></a>
+                <a href="module2-lesson2.html"><button>Next Lesson</button></a>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const hotspots = document.querySelectorAll('.hotspot');
+            const popups = document.querySelectorAll('.popup-box');
+            const closeButtons = document.querySelectorAll('.close-popup');
+
+            // Add pulsing animation to hotspots
+            hotspots.forEach(hotspot => {
+                hotspot.classList.add('active');
+            });
+
+            // Hotspot click events
+            hotspots.forEach(hotspot => {
+                hotspot.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const hazardType = hotspot.getAttribute('data-hazard');
+                    
+                    // Close all popups first
+                    popups.forEach(popup => popup.classList.remove('active'));
+                    
+                    // Open the corresponding popup
+                    const targetPopup = document.getElementById(`popup-${hazardType}`);
+                    if (targetPopup) {
+                        setTimeout(() => {
+                            targetPopup.classList.add('active');
+                        }, 100);
+                    }
+                });
+            });
+
+            // Close button events
+            closeButtons.forEach(button => {
+                button.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const popup = button.closest('.popup-box');
+                    popup.classList.remove('active');
+                });
+            });
+
+            // Click outside to close popups
+            document.addEventListener('click', (e) => {
+                if (!e.target.closest('.popup-box') && !e.target.closest('.hotspot')) {
+                    popups.forEach(popup => popup.classList.remove('active'));
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>

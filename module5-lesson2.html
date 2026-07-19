@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module 5 Lesson 2 - Health & Safety in the Workplace</title>
+    <style>
+        /* --- Google Font Import --- */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+        /* --- CSS Variables --- */
+        :root {
+            --primary-color: #20B2AA;
+            --secondary-color: #008B8B;
+            --background-color: #f4f7f9;
+            --text-color: #333;
+            --light-gray-color: #e9ecef;
+            --white-color: #ffffff;
+            --success-color: #28a745;
+            --danger-color: #dc3545;
+            --font-family: 'Poppins', sans-serif;
+        }
+
+        /* --- General Reset --- */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background-color: var(--background-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        /* --- Main Course Container --- */
+        .course-container {
+            width: 100%;
+            min-height: 100vh;
+            background: var(--white-color);
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* --- Header --- */
+        header {
+            padding: 20px 40px;
+            border-bottom: 1px solid var(--light-gray-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-shrink: 0;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+        .logo span {
+            font-weight: 300;
+        }
+
+        .course-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            background-color: var(--primary-color);
+            color: var(--white-color);
+            padding: 12px 25px;
+            border-radius: 25px;
+            text-align: center;
+        }
+
+        /* --- Main Content Area --- */
+        main {
+            flex-grow: 1;
+            padding: 50px 60px;
+            width: 100%;
+        }
+
+        .lesson-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .lesson-header h1 {
+            font-size: 3.2rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            line-height: 1.2;
+        }
+
+        .lesson-header h2 {
+            font-size: 2rem;
+            color: var(--secondary-color);
+            font-weight: 400;
+            line-height: 1.3;
+        }
+
+        /* --- Arrows & Content Layout --- */
+        .arrows-container {
+            display: flex;
+            max-width: 1200px;
+            margin: 0 auto;
+            gap: 40px;
+            align-items: flex-start;
+        }
+
+        .arrows-list {
+            flex: 1;
+            max-width: 450px;
+            width: 100%;
+        }
+
+        .arrow-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            padding: 10px;
+            border-radius: 10px;
+        }
+
+        .arrow-item:hover {
+            background-color: #f8f9fa;
+        }
+
+        .arrow-icon {
+            width: 50px;
+            height: 50px;
+            background-color: var(--primary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 20px;
+            transition: all 0.3s ease;
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .arrow-icon::before {
+            content: '→';
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+            transition: transform 0.3s ease;
+        }
+
+        .arrow-icon.active {
+            background-color: var(--secondary-color);
+            transform: scale(1.1);
+        }
+
+        .arrow-icon.active::before {
+            transform: rotate(90deg);
+        }
+
+        .arrow-text {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--text-color);
+            transition: color 0.3s ease;
+            flex-grow: 1;
+        }
+
+        .arrow-item:hover .arrow-icon {
+            background-color: var(--secondary-color);
+            transform: scale(1.05);
+        }
+
+        .arrow-item:hover .arrow-text {
+            color: var(--primary-color);
+        }
+
+        .visual-icon {
+            font-size: 2rem;
+            margin-left: 15px;
+            color: var(--primary-color);
+            transition: transform 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .arrow-item:hover .visual-icon {
+            transform: scale(1.2) rotate(10deg);
+        }
+
+        /* Content Panel */
+        .content-panel {
+            flex: 1.5;
+            background: linear-gradient(135deg, #f8f9fa, #ffffff);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            border: 2px solid var(--light-gray-color);
+            min-height: 350px;
+            position: relative;
+            width: 100%;
+        }
+
+        /* Position text absolutely so they overlap perfectly */
+        .content-text {
+            position: absolute;
+            top: 40px;
+            left: 40px;
+            right: 40px;
+            opacity: 0;
+            transform: translateX(30px);
+            transition: all 0.4s ease;
+            font-size: 1.3rem;
+            line-height: 1.7;
+            color: var(--text-color);
+            pointer-events: none;
+        }
+
+        .content-text.active {
+            opacity: 1;
+            transform: translateX(0);
+            pointer-events: auto;
+        }
+
+        .content-placeholder {
+            text-align: center;
+            color: #6c757d;
+            font-size: 1.2rem;
+            margin-top: 80px;
+            position: absolute;
+            width: 100%;
+            left: 0;
+            padding: 0 20px;
+        }
+
+        /* Progress Checkmarks */
+        .progress-checkmarks {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            padding: 0 20px;
+        }
+
+        .checkmark {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: var(--light-gray-color);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .checkmark.viewed {
+            background-color: var(--success-color);
+            transform: scale(1.2);
+        }
+
+        .checkmark.viewed::before {
+            content: '✓';
+        }
+
+        .checkmark.active {
+            background-color: var(--primary-color);
+            transform: scale(1.4);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1.4); }
+            50% { transform: scale(1.6); }
+            100% { transform: scale(1.4); }
+        }
+
+        /* --- Footer & Navigation (Strictly Matching Specs) --- */
+        footer {
+            padding: 20px 40px;
+            border-top: 1px solid var(--light-gray-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-shrink: 0;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .navigation-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .navigation-buttons button {
+            background-color: var(--primary-color);
+            color: var(--white-color);
+            border: none;
+            padding: 15px 35px; /* Exact match */
+            border-radius: 25px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            text-decoration: none;
+            display: inline-block;
+            min-width: 160px; /* Exact match */
+            text-align: center;
+        }
+
+        .navigation-buttons button:hover {
+            background-color: var(--secondary-color);
+            transform: scale(1.05);
+        }
+
+        .navigation-buttons a {
+            text-decoration: none;
+        }
+
+        #prev-btn {
+            background-color: #6c757d;
+        }
+        #prev-btn:hover {
+            background-color: #5a6268;
+        }
+
+        .lesson-info {
+            font-size: 1.1rem;
+            color: #6c757d;
+            font-weight: 500;
+        }
+
+        /* --- RESPONSIVE DESIGN --- */
+
+        /* Tablet (max 991px) */
+        @media (max-width: 991px) {
+            header {
+                padding: 18px 25px;
+            }
+            main {
+                padding: 30px 30px;
+            }
+            .lesson-header h1 {
+                font-size: 2.8rem;
+            }
+            .lesson-header h2 {
+                font-size: 1.8rem;
+            }
+
+            /* Stack layout for tablet */
+            .arrows-container {
+                flex-direction: column;
+                gap: 30px;
+                align-items: center;
+            }
+            
+            .arrows-list {
+                max-width: 100%;
+            }
+            
+            .content-panel {
+                width: 100%;
+                min-height: 250px; /* Adjust height for tablet */
+            }
+            
+            .content-placeholder {
+                margin-top: 60px;
+            }
+        }
+
+        /* Mobile (max 768px) */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                text-align: center;
+                gap: 10px;
+            }
+            
+            .lesson-header h1 {
+                font-size: 2.2rem;
+            }
+            
+            .lesson-header h2 {
+                font-size: 1.4rem;
+            }
+            
+            .arrow-text {
+                font-size: 1.1rem;
+            }
+            
+            .content-text {
+                font-size: 1.1rem;
+                top: 30px;
+                left: 20px;
+                right: 20px;
+            }
+            
+            .content-panel {
+                padding: 30px 20px;
+            }
+            
+            .arrow-icon {
+                width: 40px;
+                height: 40px;
+                margin-right: 15px;
+            }
+            
+            .arrow-icon::before {
+                font-size: 1.2rem;
+            }
+            
+            .visual-icon {
+                font-size: 1.5rem;
+                margin-left: 10px;
+            }
+            
+            footer {
+                padding: 18px 25px;
+                flex-direction: column;
+                text-align: center;
+                gap: 15px;
+            }
+        }
+
+        /* Small Mobile (max 575px) - Matches Previous Footer Logic */
+        @media (max-width: 575px) {
+            header {
+                padding: 15px 20px;
+            }
+            
+            .course-title {
+                font-size: 1rem;
+                padding: 8px 16px;
+                white-space: normal;
+                line-height: 1.4;
+            }
+            
+            main {
+                padding: 20px 15px;
+            }
+            
+            .lesson-header h1 {
+                font-size: 1.8rem;
+            }
+
+            /* Footer Button Stacking Logic */
+            .lesson-info {
+                font-size: 1rem;
+                order: 2; /* Move text below buttons */
+            }
+
+            .navigation-buttons {
+                order: 1; /* Move buttons above text */
+                justify-content: center;
+                width: 100%;
+                flex-direction: column; /* Stack buttons */
+                gap: 10px;
+            }
+
+            .navigation-buttons button {
+                font-size: 1rem;
+                padding: 12px 20px;
+                width: 100%; /* Full width */
+                max-width: 250px;
+                margin: 0 auto;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="course-container">
+        <header>
+            <div class="logo">Skill<span>Trail</span></div>
+            <div class="course-title">Health & Safety in the Workplace</div>
+        </header>
+
+        <main>
+            <div class="lesson-header">
+                <h1>Module 5: Emergency Procedures and Incident Reporting</h1>
+                <h2>Lesson 2: Reporting Accidents, Injuries, and Near Misses</h2>
+            </div>
+
+            <div class="arrows-container">
+                <div class="arrows-list">
+                    <div class="arrow-item" data-step="1">
+                        <div class="arrow-icon"></div>
+                        <div class="arrow-text">Know what to report</div>
+                        <div class="visual-icon">📋</div>
+                    </div>
+
+                    <div class="arrow-item" data-step="2">
+                        <div class="arrow-icon"></div>
+                        <div class="arrow-text">Use the correct reporting process</div>
+                        <div class="visual-icon">✏️</div>
+                    </div>
+
+                    <div class="arrow-item" data-step="3">
+                        <div class="arrow-icon"></div>
+                        <div class="arrow-text">Provide clear and accurate details</div>
+                        <div class="visual-icon">🚨</div>
+                    </div>
+
+                    <div class="arrow-item" data-step="4">
+                        <div class="arrow-icon"></div>
+                        <div class="arrow-text">Notify supervisors or safety officers</div>
+                        <div class="visual-icon">👨‍💼</div>
+                    </div>
+
+                    <div class="arrow-item" data-step="5">
+                        <div class="arrow-icon"></div>
+                        <div class="arrow-text">Learn from the incident</div>
+                        <div class="visual-icon">💡</div>
+                    </div>
+
+                    <div class="progress-checkmarks">
+                        <div class="checkmark" data-step="1"></div>
+                        <div class="checkmark" data-step="2"></div>
+                        <div class="checkmark" data-step="3"></div>
+                        <div class="checkmark" data-step="4"></div>
+                        <div class="checkmark" data-step="5"></div>
+                    </div>
+                </div>
+
+                <div class="content-panel">
+                    <div class="content-placeholder">
+                        👆 Click on each arrow to learn about incident reporting procedures
+                    </div>
+                    
+                    <div class="content-text" id="content-1">
+                        Accidents, injuries, unsafe conditions, and near misses should all be reported, even if no one was seriously harmed.
+                    </div>
+
+                    <div class="content-text" id="content-2">
+                        Follow your organisation's reporting procedure or complete the relevant incident form as soon as possible after the event.
+                    </div>
+
+                    <div class="content-text" id="content-3">
+                        Include the date, time, location, people involved, and a brief description of what happened to help the investigation.
+                    </div>
+
+                    <div class="content-text" id="content-4">
+                        Report directly to your line manager or the person responsible for health and safety so appropriate action can be taken.
+                    </div>
+
+                    <div class="content-text" id="content-5">
+                        Every report helps identify risks and prevent future accidents. Sharing lessons learned promotes a safer workplace for everyone.
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <div class="lesson-info">Module 5 - Lesson 2</div>
+            <div class="navigation-buttons">
+                <a href="module5-lesson1.html"><button id="prev-btn">Previous Lesson</button></a>
+                <a href="module5-lesson3.html"><button>Next Lesson</button></a>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const arrowItems = document.querySelectorAll('.arrow-item');
+            const contentTexts = document.querySelectorAll('.content-text');
+            const checkmarks = document.querySelectorAll('.checkmark');
+            const placeholder = document.querySelector('.content-placeholder');
+            let viewedSteps = new Set();
+            let currentStep = null;
+
+            arrowItems.forEach(item => {
+                item.addEventListener('click', () => {
+                    const step = item.getAttribute('data-step');
+                    
+                    // Remove active state from all arrows
+                    arrowItems.forEach(arrow => {
+                        arrow.querySelector('.arrow-icon').classList.remove('active');
+                    });
+                    
+                    // Hide all content texts
+                    contentTexts.forEach(content => {
+                        content.classList.remove('active');
+                    });
+                    
+                    // Hide placeholder if first interaction
+                    if (placeholder) {
+                        placeholder.style.display = 'none';
+                    }
+                    
+                    // Add active state to current arrow
+                    item.querySelector('.arrow-icon').classList.add('active');
+                    
+                    // Show corresponding content with slide animation
+                    setTimeout(() => {
+                        const targetContent = document.getElementById(`content-${step}`);
+                        if (targetContent) {
+                            targetContent.classList.add('active');
+                        }
+                    }, 200);
+                    
+                    // Mark step as viewed
+                    viewedSteps.add(step);
+                    currentStep = step;
+                    
+                    // Update checkmarks
+                    updateCheckmarks();
+                });
+            });
+
+            function updateCheckmarks() {
+                checkmarks.forEach(checkmark => {
+                    const step = checkmark.getAttribute('data-step');
+                    
+                    // Remove all classes first
+                    checkmark.classList.remove('viewed', 'active');
+                    
+                    if (step === currentStep) {
+                        checkmark.classList.add('active');
+                    } else if (viewedSteps.has(step)) {
+                        checkmark.classList.add('viewed');
+                    }
+                });
+            }
+        });
+    </script>
+
+</body>
+</html>

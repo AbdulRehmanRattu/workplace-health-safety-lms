@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module 2 Lesson 3 - Health & Safety in the Workplace</title>
+    <style>
+        /* --- Google Font Import --- */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+        /* --- CSS Variables --- */
+        :root {
+            --primary-color: #20B2AA;
+            --secondary-color: #008B8B;
+            --background-color: #f4f7f9;
+            --text-color: #333;
+            --light-gray-color: #e9ecef;
+            --white-color: #ffffff;
+            --success-color: #28a745;
+            --danger-color: #dc3545;
+            --font-family: 'Poppins', sans-serif;
+        }
+
+        /* --- General Reset --- */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            width: 100%;
+            overflow-x: hidden; /* Critical fix for horizontal scroll */
+        }
+
+        body {
+            font-family: var(--font-family);
+            background-color: var(--background-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+        }
+
+        /* --- Main Course Container --- */
+        .course-container {
+            width: 100%; /* Changed from 100vw to 100% to prevent overflow */
+            min-height: 100vh;
+            background: var(--white-color);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        /* --- Header --- */
+        header {
+            padding: 20px 40px;
+            border-bottom: 1px solid var(--light-gray-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-shrink: 0;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+        .logo span {
+            font-weight: 300;
+        }
+
+        .course-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            background-color: var(--primary-color);
+            color: var(--white-color);
+            padding: 12px 25px;
+            border-radius: 25px;
+            text-align: center;
+        }
+
+        /* --- Main Content Area --- */
+        main {
+            flex-grow: 1;
+            padding: 50px 60px;
+            width: 100%;
+        }
+
+        .lesson-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .lesson-header h1 {
+            font-size: 3.2rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            line-height: 1.2;
+        }
+
+        .lesson-header h2 {
+            font-size: 2rem;
+            color: var(--secondary-color);
+            font-weight: 400;
+            line-height: 1.3;
+        }
+
+        /* --- Timeline Interaction --- */
+        .timeline-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 0;
+        }
+
+        .timeline-path {
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 60px;
+            padding: 0 20px;
+        }
+
+        .timeline-line {
+            position: absolute;
+            top: 40px; /* Centered to 80px circle */
+            left: 40px;
+            right: 40px;
+            height: 4px;
+            background-color: var(--light-gray-color);
+            border-radius: 2px;
+            z-index: 1;
+        }
+
+        .timeline-progress {
+            position: absolute;
+            top: 40px;
+            left: 40px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            border-radius: 2px;
+            z-index: 2;
+            width: 0%;
+            transition: width 1s ease;
+        }
+
+        .timeline-milestone {
+            position: relative;
+            z-index: 3;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .milestone-circle {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-color: var(--light-gray-color);
+            border: 4px solid var(--white-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .milestone-circle.active {
+            background-color: var(--primary-color);
+            transform: scale(1.2);
+            box-shadow: 0 6px 20px rgba(32, 178, 170, 0.4);
+            animation: glow 2s infinite alternate;
+        }
+
+        .milestone-circle.completed {
+            background-color: var(--success-color);
+            transform: scale(1.1);
+        }
+
+        @keyframes glow {
+            from { box-shadow: 0 6px 20px rgba(32, 178, 170, 0.4); }
+            to { box-shadow: 0 8px 25px rgba(32, 178, 170, 0.8); }
+        }
+
+        .milestone-icon {
+            font-size: 2rem;
+            color: white;
+            transition: transform 0.3s ease;
+        }
+
+        .milestone-circle:hover {
+            transform: scale(1.15);
+        }
+
+        .milestone-circle:hover .milestone-icon {
+            transform: rotate(10deg);
+        }
+
+        .milestone-label {
+            position: absolute;
+            top: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-color);
+            text-align: center;
+            white-space: nowrap;
+            max-width: 120px;
+        }
+
+        /* Content Area */
+        .content-area {
+            background: linear-gradient(135deg, #f8f9fa, #ffffff);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            border: 2px solid var(--light-gray-color);
+            min-height: 250px;
+            position: relative;
+        }
+
+        .content-text {
+            position: absolute;
+            top: 40px;
+            left: 40px;
+            right: 40px;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.4s ease;
+            font-size: 1.3rem;
+            line-height: 1.7;
+            color: var(--text-color);
+            pointer-events: none;
+        }
+
+        .content-text.active {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+
+        .content-placeholder {
+            text-align: center;
+            color: #6c757d;
+            font-size: 1.3rem;
+            font-style: italic;
+            margin-top: 60px;
+            position: absolute;
+            width: 100%;
+            left: 0;
+            padding: 0 20px;
+        }
+
+        .content-header {
+            font-size: 1.6rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .content-icon {
+            margin-right: 15px;
+            font-size: 2rem;
+        }
+
+        /* --- Footer & Navigation --- */
+        footer {
+            padding: 20px 40px;
+            border-top: 1px solid var(--light-gray-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-shrink: 0;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .navigation-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .navigation-buttons button {
+            background-color: var(--primary-color);
+            color: var(--white-color);
+            border: none;
+            padding: 15px 35px;
+            border-radius: 25px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            text-decoration: none;
+            display: inline-block;
+            min-width: 160px;
+            text-align: center;
+        }
+
+        .navigation-buttons button:hover {
+            background-color: var(--secondary-color);
+            transform: scale(1.05);
+        }
+
+        .navigation-buttons a {
+            text-decoration: none;
+        }
+
+        #prev-btn {
+            background-color: #6c757d;
+        }
+        #prev-btn:hover {
+            background-color: #5a6268;
+        }
+
+        .lesson-info {
+            font-size: 1.1rem;
+            color: #6c757d;
+            font-weight: 500;
+        }
+
+        /* --- RESPONSIVE DESIGN --- */
+
+        /* Tablet (max 991px) */
+        @media (max-width: 991px) {
+            header {
+                padding: 18px 25px;
+            }
+            main {
+                padding: 30px 30px;
+            }
+            .lesson-header h1 {
+                font-size: 2.8rem;
+            }
+            .lesson-header h2 {
+                font-size: 1.8rem;
+            }
+        }
+
+        /* Mobile (max 768px) */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                text-align: center;
+                gap: 10px;
+            }
+            
+            .lesson-header h1 {
+                font-size: 2.2rem;
+            }
+            .lesson-header h2 {
+                font-size: 1.4rem;
+            }
+            
+            /* Stack timeline vertically on mobile */
+            .timeline-path {
+                flex-direction: column;
+                gap: 30px;
+                margin-bottom: 40px;
+            }
+            
+            /* Hide the horizontal line */
+            .timeline-line,
+            .timeline-progress {
+                display: none;
+            }
+            
+            .milestone-circle {
+                width: 70px;
+                height: 70px;
+            }
+            
+            .milestone-icon {
+                font-size: 1.5rem;
+            }
+            
+            /* Fix label position for vertical stack */
+            .milestone-label {
+                position: static;
+                transform: none;
+                margin-top: 10px;
+                white-space: normal;
+                max-width: none;
+            }
+            
+            .content-area {
+                padding: 30px 20px;
+                min-height: 320px; /* Increased height for stacked content */
+            }
+            
+            .content-text {
+                position: absolute;
+                top: 30px;
+                left: 20px;
+                right: 20px;
+                font-size: 1.1rem;
+                transform: translateY(20px);
+            }
+            
+            .content-text.active {
+                transform: translateY(0);
+            }
+            
+            .content-header {
+                font-size: 1.3rem;
+            }
+            
+            footer {
+                padding: 18px 25px;
+                flex-direction: column;
+                text-align: center;
+                gap: 15px;
+            }
+        }
+
+        /* Small Mobile (max 575px) - Fix Horizontal Scroll */
+        @media (max-width: 575px) {
+            header {
+                padding: 15px 20px;
+            }
+            
+            .course-title {
+                font-size: 1rem;
+                padding: 8px 16px;
+                white-space: normal;
+                line-height: 1.4;
+            }
+            
+            main {
+                padding: 20px 15px;
+            }
+            
+            .lesson-header h1 {
+                font-size: 1.8rem;
+            }
+
+            /* Footer Button Stacking Logic */
+            .lesson-info {
+                font-size: 1rem;
+                order: 2; /* Move text below buttons */
+            }
+
+            .navigation-buttons {
+                order: 1; /* Move buttons above text */
+                justify-content: center;
+                width: 100%;
+                flex-direction: column; /* Stack buttons vertically */
+                gap: 10px;
+            }
+
+            .navigation-buttons button {
+                font-size: 1rem;
+                padding: 12px 20px;
+                width: 100%; /* Full width */
+                min-width: unset; /* Remove min-width constraint */
+                max-width: 300px;
+                margin: 0 auto;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="course-container">
+        <header>
+            <div class="logo">Skill<span>Trail</span></div>
+            <div class="course-title">Health & Safety in the Workplace</div>
+        </header>
+
+        <main>
+            <div class="lesson-header">
+                <h1>Module 2: Identifying Workplace Hazards</h1>
+                <h2>Lesson 3: Reporting Unsafe Conditions and Near Misses</h2>
+            </div>
+
+            <div class="timeline-container">
+                <div class="timeline-path">
+                    <div class="timeline-line"></div>
+                    <div class="timeline-progress"></div>
+
+                    <div class="timeline-milestone" data-step="1">
+                        <div class="milestone-circle">
+                            <div class="milestone-icon">🔍</div>
+                        </div>
+                        <div class="milestone-label">Recognising near misses</div>
+                    </div>
+
+                    <div class="timeline-milestone" data-step="2">
+                        <div class="milestone-circle">
+                            <div class="milestone-icon">📋</div>
+                        </div>
+                        <div class="milestone-label">Reporting unsafe conditions</div>
+                    </div>
+
+                    <div class="timeline-milestone" data-step="3">
+                        <div class="milestone-circle">
+                            <div class="milestone-icon">📝</div>
+                        </div>
+                        <div class="milestone-label">Using proper process</div>
+                    </div>
+
+                    <div class="timeline-milestone" data-step="4">
+                        <div class="milestone-circle">
+                            <div class="milestone-icon">🤝</div>
+                        </div>
+                        <div class="milestone-label">No-blame culture</div>
+                    </div>
+
+                    <div class="timeline-milestone" data-step="5">
+                        <div class="milestone-circle">
+                            <div class="milestone-icon">⚡</div>
+                        </div>
+                        <div class="milestone-label">Quick action</div>
+                    </div>
+                </div>
+
+                <div class="content-area">
+                    <div class="content-placeholder">
+                        👆 Click each milestone above to learn about reporting unsafe conditions
+                    </div>
+
+                    <div class="content-text" id="content-1">
+                        <div class="content-header">
+                            <div class="content-icon">🔍</div>
+                            Recognising near misses
+                        </div>
+                        A near miss is an event that could have caused harm but didn't — recognising and reporting these helps prevent future accidents.
+                    </div>
+
+                    <div class="content-text" id="content-2">
+                        <div class="content-header">
+                            <div class="content-icon">📋</div>
+                            Reporting unsafe conditions
+                        </div>
+                        If you see something unsafe, like a loose cable or spill, report it immediately to your supervisor or through the correct safety channel.
+                    </div>
+
+                    <div class="content-text" id="content-3">
+                        <div class="content-header">
+                            <div class="content-icon">📝</div>
+                            Using the proper reporting process
+                        </div>
+                        Every organisation should have a clear reporting procedure. Follow it carefully so issues are logged, tracked, and resolved efficiently.
+                    </div>
+
+                    <div class="content-text" id="content-4">
+                        <div class="content-header">
+                            <div class="content-icon">🤝</div>
+                            Encouraging a no-blame culture
+                        </div>
+                        Reporting should never result in punishment. A no-blame culture motivates employees to speak up about hazards without fear.
+                    </div>
+
+                    <div class="content-text" id="content-5">
+                        <div class="content-header">
+                            <div class="content-icon">⚡</div>
+                            Taking corrective action quickly
+                        </div>
+                        Timely responses to reports show commitment to safety and help prevent small issues from turning into serious incidents.
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <div class="lesson-info">Module 2 - Lesson 3</div>
+            <div class="navigation-buttons">
+                <a href="module2-lesson2.html"><button id="prev-btn">Previous Lesson</button></a>
+                <a href="index.html"><button>Back to Main Menu</button></a>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const milestones = document.querySelectorAll('.timeline-milestone');
+            const contentTexts = document.querySelectorAll('.content-text');
+            const placeholder = document.querySelector('.content-placeholder');
+            const progressLine = document.querySelector('.timeline-progress');
+            let completedSteps = new Set();
+
+            milestones.forEach((milestone, index) => {
+                milestone.addEventListener('click', () => {
+                    const step = milestone.getAttribute('data-step');
+                    
+                    // Remove active state from all milestones
+                    milestones.forEach(m => {
+                        m.querySelector('.milestone-circle').classList.remove('active');
+                    });
+                    
+                    // Hide all content texts
+                    contentTexts.forEach(content => {
+                        content.classList.remove('active');
+                    });
+                    
+                    // Hide placeholder
+                    if (placeholder) {
+                        placeholder.style.display = 'none';
+                    }
+                    
+                    // Add active state to current milestone
+                    milestone.querySelector('.milestone-circle').classList.add('active');
+                    
+                    // Show corresponding content
+                    setTimeout(() => {
+                        const targetContent = document.getElementById(`content-${step}`);
+                        if (targetContent) {
+                            targetContent.classList.add('active');
+                        }
+                    }, 200);
+                    
+                    // Mark as completed and update progress
+                    completedSteps.add(parseInt(step));
+                    updateProgress();
+                    updateCompletedMilestones();
+                });
+            });
+
+            function updateProgress() {
+                // Progress bar only visible on desktop/tablet where line exists
+                if (window.innerWidth <= 768) return;
+
+                const totalSteps = milestones.length;
+                const completed = completedSteps.size;
+                const progressPercentage = (completed / totalSteps) * 90; // 90% max to leave space for last milestone
+                
+                if (progressLine) {
+                    progressLine.style.width = progressPercentage + '%';
+                }
+            }
+
+            function updateCompletedMilestones() {
+                milestones.forEach(milestone => {
+                    const step = parseInt(milestone.getAttribute('data-step'));
+                    const circle = milestone.querySelector('.milestone-circle');
+                    
+                    if (completedSteps.has(step) && !circle.classList.contains('active')) {
+                        circle.classList.add('completed');
+                    }
+                });
+            }
+        });
+    </script>
+
+</body>
+</html>

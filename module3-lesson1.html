@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module 3 Lesson 1 - Health & Safety in the Workplace</title>
+    <style>
+        /* --- Google Font Import --- */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+        /* --- CSS Variables --- */
+        :root {
+            --primary-color: #20B2AA;
+            --secondary-color: #008B8B;
+            --background-color: #f4f7f9;
+            --text-color: #333;
+            --light-gray-color: #e9ecef;
+            --white-color: #ffffff;
+            --success-color: #28a745;
+            --danger-color: #dc3545;
+            --font-family: 'Poppins', sans-serif;
+        }
+
+        /* --- General Reset --- */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            width: 100%;
+            overflow-x: hidden; /* Critical to prevent horizontal scroll */
+        }
+
+        body {
+            font-family: var(--font-family);
+            background-color: var(--background-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+        }
+
+        /* --- Main Course Container --- */
+        .course-container {
+            width: 100%; /* Changed from 100vw to 100% */
+            min-height: 100vh;
+            background: var(--white-color);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        /* --- Header --- */
+        header {
+            padding: 20px 40px;
+            border-bottom: 1px solid var(--light-gray-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-shrink: 0;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+        .logo span {
+            font-weight: 300;
+        }
+
+        .course-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            background-color: var(--primary-color);
+            color: var(--white-color);
+            padding: 12px 25px;
+            border-radius: 25px;
+            text-align: center;
+        }
+
+        /* --- Main Content Area --- */
+        main {
+            flex-grow: 1;
+            padding: 50px 60px;
+            width: 100%;
+        }
+
+        .lesson-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .lesson-header h1 {
+            font-size: 3.2rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            line-height: 1.2;
+        }
+
+        .lesson-header h2 {
+            font-size: 2rem;
+            color: var(--secondary-color);
+            font-weight: 400;
+            line-height: 1.3;
+        }
+
+        /* --- Arrows & Content Layout --- */
+        .arrows-container {
+            display: flex;
+            max-width: 1200px;
+            margin: 0 auto;
+            gap: 40px;
+            align-items: flex-start;
+        }
+
+        .arrows-list {
+            flex: 1;
+            max-width: 400px;
+            width: 100%;
+        }
+
+        .arrow-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            padding: 5px;
+            border-radius: 30px;
+        }
+
+        .arrow-item:hover {
+            background-color: #f8f9fa;
+        }
+
+        .arrow-icon {
+            width: 50px;
+            height: 50px;
+            background-color: var(--primary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 20px;
+            transition: all 0.3s ease;
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .arrow-icon::before {
+            content: '→';
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+            transition: transform 0.3s ease;
+        }
+
+        .arrow-icon.active {
+            background-color: var(--secondary-color);
+            transform: scale(1.1);
+        }
+
+        .arrow-icon.active::before {
+            transform: rotate(90deg);
+        }
+
+        .arrow-text {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--text-color);
+            transition: color 0.3s ease;
+        }
+
+        .arrow-item:hover .arrow-icon {
+            background-color: var(--secondary-color);
+            transform: scale(1.05);
+        }
+
+        .arrow-item:hover .arrow-text {
+            color: var(--primary-color);
+        }
+
+        /* Step numbering */
+        .step-number {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background-color: var(--danger-color);
+            color: white;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        /* Content Panel */
+        .content-panel {
+            flex: 1.5;
+            background: linear-gradient(135deg, #f8f9fa, #ffffff);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            border: 2px solid var(--light-gray-color);
+            min-height: 300px;
+            position: relative;
+            width: 100%;
+        }
+
+        /* Absolute positioning for smooth overlapping */
+        .content-text {
+            position: absolute;
+            top: 40px;
+            left: 40px;
+            right: 40px;
+            opacity: 0;
+            transform: translateX(50px);
+            transition: all 0.5s ease;
+            font-size: 1.3rem;
+            line-height: 1.7;
+            color: var(--text-color);
+            pointer-events: none;
+        }
+
+        .content-text.active {
+            opacity: 1;
+            transform: translateX(0);
+            pointer-events: auto;
+        }
+
+        .content-placeholder {
+            text-align: center;
+            color: #6c757d;
+            font-size: 1.2rem;
+            margin-top: 50px;
+            position: absolute;
+            width: 100%;
+            left: 0;
+            padding: 0 20px;
+        }
+
+        /* Progress Indicator */
+        .progress-indicator {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            padding: 0 20px;
+        }
+
+        .progress-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: var(--light-gray-color);
+            transition: all 0.3s ease;
+        }
+
+        .progress-dot.viewed {
+            background-color: var(--success-color);
+            transform: scale(1.2);
+        }
+
+        .progress-dot.active {
+            background-color: var(--primary-color);
+            transform: scale(1.4);
+        }
+
+        /* --- Footer & Navigation --- */
+        footer {
+            padding: 20px 40px;
+            border-top: 1px solid var(--light-gray-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-shrink: 0;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .navigation-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .navigation-buttons button {
+            background-color: var(--primary-color);
+            color: var(--white-color);
+            border: none;
+            padding: 15px 35px; /* Exact match */
+            border-radius: 25px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            text-decoration: none;
+            display: inline-block;
+            min-width: 160px; /* Exact match */
+            text-align: center;
+        }
+
+        .navigation-buttons button:hover {
+            background-color: var(--secondary-color);
+            transform: scale(1.05);
+        }
+
+        .navigation-buttons a {
+            text-decoration: none;
+        }
+
+        #prev-btn {
+            background-color: #6c757d;
+        }
+        #prev-btn:hover {
+            background-color: #5a6268;
+        }
+
+        .lesson-info {
+            font-size: 1.1rem;
+            color: #6c757d;
+            font-weight: 500;
+        }
+
+        /* --- RESPONSIVE DESIGN --- */
+
+        /* Tablet (max 991px) */
+        @media (max-width: 991px) {
+            header {
+                padding: 18px 25px;
+            }
+            main {
+                padding: 30px 30px;
+            }
+            .lesson-header h1 {
+                font-size: 2.8rem;
+            }
+            .lesson-header h2 {
+                font-size: 1.8rem;
+            }
+
+            /* Stack layout for tablet */
+            .arrows-container {
+                flex-direction: column;
+                gap: 30px;
+                align-items: center;
+            }
+            
+            .arrows-list {
+                max-width: 100%;
+            }
+            
+            .content-panel {
+                width: 100%;
+                min-height: 250px;
+            }
+            
+            .content-placeholder {
+                margin-top: 60px;
+            }
+        }
+
+        /* Mobile (max 768px) */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                text-align: center;
+                gap: 10px;
+            }
+            
+            .lesson-header h1 {
+                font-size: 2.2rem;
+            }
+            .lesson-header h2 {
+                font-size: 1.4rem;
+            }
+            
+            .arrow-text {
+                font-size: 1.1rem;
+            }
+            
+            .content-text {
+                font-size: 1.1rem;
+                top: 30px;
+                left: 20px;
+                right: 20px;
+            }
+            
+            .content-panel {
+                padding: 30px 20px;
+            }
+            
+            .arrow-icon {
+                width: 40px;
+                height: 40px;
+                margin-right: 15px;
+            }
+            
+            .arrow-icon::before {
+                font-size: 1.2rem;
+            }
+
+            .step-number {
+                width: 20px;
+                height: 20px;
+                font-size: 0.8rem;
+            }
+            
+            footer {
+                padding: 18px 25px;
+                flex-direction: column;
+                text-align: center;
+                gap: 15px;
+            }
+        }
+
+        /* Small Mobile (max 575px) - Matches Previous Footer Logic */
+        @media (max-width: 575px) {
+            header {
+                padding: 15px 20px;
+            }
+            
+            .course-title {
+                font-size: 1rem;
+                padding: 8px 16px;
+                white-space: normal;
+                line-height: 1.4;
+            }
+            
+            main {
+                padding: 20px 15px;
+            }
+            
+            .lesson-header h1 {
+                font-size: 1.8rem;
+            }
+
+            /* Footer Button Stacking Logic to prevent horizontal scroll */
+            .lesson-info {
+                font-size: 1rem;
+                order: 2; /* Move text below buttons */
+            }
+
+            .navigation-buttons {
+                order: 1; /* Move buttons above text */
+                justify-content: center;
+                width: 100%;
+                flex-direction: column; /* Stack buttons vertically */
+                gap: 10px;
+            }
+
+            .navigation-buttons button {
+                font-size: 1rem;
+                padding: 12px 20px;
+                width: 100%; /* Full width */
+                min-width: unset; /* Remove min-width constraint */
+                max-width: 300px;
+                margin: 0 auto;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="course-container">
+        <header>
+            <div class="logo">Skill<span>Trail</span></div>
+            <div class="course-title">Health & Safety in the Workplace</div>
+        </header>
+
+        <main>
+            <div class="lesson-header">
+                <h1>Module 3: Risk Assessment and Control Measures</h1>
+                <h2>Lesson 1: Understanding Risk Assessment</h2>
+            </div>
+
+            <div class="arrows-container">
+                <div class="arrows-list">
+                    <div class="arrow-item" data-step="1">
+                        <div class="arrow-icon">
+                            <div class="step-number">1</div>
+                        </div>
+                        <div class="arrow-text">What is a risk assessment?</div>
+                    </div>
+
+                    <div class="arrow-item" data-step="2">
+                        <div class="arrow-icon">
+                            <div class="step-number">2</div>
+                        </div>
+                        <div class="arrow-text">Why risk assessments matter</div>
+                    </div>
+
+                    <div class="arrow-item" data-step="3">
+                        <div class="arrow-icon">
+                            <div class="step-number">3</div>
+                        </div>
+                        <div class="arrow-text">Who is responsible</div>
+                    </div>
+
+                    <div class="arrow-item" data-step="4">
+                        <div class="arrow-icon">
+                            <div class="step-number">4</div>
+                        </div>
+                        <div class="arrow-text">When to carry out a risk assessment</div>
+                    </div>
+
+                    <div class="arrow-item" data-step="5">
+                        <div class="arrow-icon">
+                            <div class="step-number">5</div>
+                        </div>
+                        <div class="arrow-text">Recording and reviewing results</div>
+                    </div>
+
+                    <div class="progress-indicator">
+                        <div class="progress-dot" data-step="1"></div>
+                        <div class="progress-dot" data-step="2"></div>
+                        <div class="progress-dot" data-step="3"></div>
+                        <div class="progress-dot" data-step="4"></div>
+                        <div class="progress-dot" data-step="5"></div>
+                    </div>
+                </div>
+
+                <div class="content-panel">
+                    <div class="content-placeholder">
+                        👆 Click on each arrow to learn about risk assessment fundamentals
+                    </div>
+                    
+                    <div class="content-text" id="content-1">
+                        A risk assessment is a careful examination of what could cause harm in the workplace, so you can weigh up precautions to prevent it.
+                    </div>
+
+                    <div class="content-text" id="content-2">
+                        They help protect people, reduce accidents, and ensure legal compliance by identifying hazards before they cause harm.
+                    </div>
+
+                    <div class="content-text" id="content-3">
+                        Employers are legally responsible for carrying out risk assessments, but everyone should play a part by reporting hazards and unsafe conditions.
+                    </div>
+
+                    <div class="content-text" id="content-4">
+                        Assessments should be done regularly, especially when new equipment, processes, or staff changes occur.
+                    </div>
+
+                    <div class="content-text" id="content-5">
+                        All findings should be documented, shared with relevant staff, and reviewed periodically to ensure control measures remain effective.
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <div class="lesson-info">Module 3 - Lesson 1</div>
+            <div class="navigation-buttons">
+                <a href="index.html"><button id="prev-btn">Back to Main</button></a>
+                <a href="module3-lesson2.html"><button>Next Lesson</button></a>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const arrowItems = document.querySelectorAll('.arrow-item');
+            const contentTexts = document.querySelectorAll('.content-text');
+            const progressDots = document.querySelectorAll('.progress-dot');
+            const placeholder = document.querySelector('.content-placeholder');
+            let viewedSteps = new Set();
+            let currentStep = null;
+
+            arrowItems.forEach(item => {
+                item.addEventListener('click', () => {
+                    const step = item.getAttribute('data-step');
+                    
+                    // Remove active state from all arrows
+                    arrowItems.forEach(arrow => {
+                        arrow.querySelector('.arrow-icon').classList.remove('active');
+                    });
+                    
+                    // Hide all content texts
+                    contentTexts.forEach(content => {
+                        content.classList.remove('active');
+                    });
+                    
+                    // Hide placeholder if first interaction
+                    if (placeholder) {
+                        placeholder.style.display = 'none';
+                    }
+                    
+                    // Add active state to current arrow
+                    item.querySelector('.arrow-icon').classList.add('active');
+                    
+                    // Show corresponding content with slide animation
+                    setTimeout(() => {
+                        const targetContent = document.getElementById(`content-${step}`);
+                        if (targetContent) {
+                            targetContent.classList.add('active');
+                        }
+                    }, 300);
+                    
+                    // Mark step as viewed
+                    viewedSteps.add(step);
+                    currentStep = step;
+                    
+                    // Update progress indicators
+                    updateProgressIndicators();
+                });
+            });
+
+            function updateProgressIndicators() {
+                progressDots.forEach(dot => {
+                    const step = dot.getAttribute('data-step');
+                    
+                    // Remove all classes first
+                    dot.classList.remove('viewed', 'active');
+                    
+                    if (step === currentStep) {
+                        dot.classList.add('active');
+                    } else if (viewedSteps.has(step)) {
+                        dot.classList.add('viewed');
+                    }
+                });
+            }
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health & Safety in the Workplace - Corporate Training</title>
+    <style>
+        /* --- Google Font Import --- */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+        /* --- CSS Variables for Easy Theming --- */
+        :root {
+            --primary-color: #20B2AA;
+            --secondary-color: #008B8B;
+            --background-color: #f4f7f9;
+            --text-color: #333;
+            --light-gray-color: #e9ecef;
+            --white-color: #ffffff;
+            --success-color: #28a745;
+            --danger-color: #dc3545;
+            --font-family: 'Poppins', sans-serif;
+        }
+
+        /* --- General Body & Reset Styles --- */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background-color: var(--background-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            /* Changed for mobile: Remove fixed overflow to allow natural scrolling */
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* --- Main Course Container --- */
+        .course-container {
+            /* Changed: Use min-height instead of fixed height for better mobile scrolling */
+            min-height: 100vh;
+            width: 100%;
+            background: var(--white-color);
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden; /* Prevent horizontal scroll */
+        }
+
+        /* --- NEW: Small Circular Reset Button --- */
+        .reset-btn {
+            position: fixed;
+            top: 15px;
+            left: 10px; /* Sits in the padding area of the header, to the left of the Logo */
+            width: 30px;
+            height: 30px;
+            background-color: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 2000; /* Ensures it stays on top of header */
+            color: #999;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        
+        .reset-btn:hover {
+            background-color: var(--danger-color);
+            color: white;
+            border-color: var(--danger-color);
+            transform: rotate(-360deg);
+        }
+
+        /* --- Header --- */
+        header {
+            padding: 20px 40px;
+            border-bottom: 1px solid var(--light-gray-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: white;
+            width: 100%;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            white-space: nowrap;
+        }
+        .logo span {
+            font-weight: 300;
+        }
+
+        .course-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            background-color: var(--primary-color);
+            color: var(--white-color);
+            padding: 10px 20px;
+            border-radius: 25px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(32, 178, 170, 0.2);
+        }
+
+        /* --- Main Content Area --- */
+        main {
+            flex-grow: 1;
+            padding: 50px 60px;
+            text-align: center;
+            width: 100%;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .welcome-content {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: var(--white-color);
+            padding: 60px;
+            border-radius: 20px;
+            margin-bottom: 50px;
+            box-shadow: 0 10px 30px rgba(32, 178, 170, 0.2);
+        }
+
+        .welcome-content h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .welcome-content p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+            opacity: 0.95;
+        }
+
+        /* Module Cards Grid */
+        .modules-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-top: 40px;
+            width: 100%;
+        }
+
+        .module-card {
+            background-color: var(--white-color);
+            border-radius: 20px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 2px solid transparent;
+            cursor: pointer;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            text-align: left; /* Better readability */
+            position: relative; /* Essential for Tick Mark positioning */
+        }
+
+        .module-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 35px rgba(32, 178, 170, 0.2);
+            border-color: var(--primary-color);
+        }
+
+        /* --- Logic Styles (Locked & Completed) --- */
+
+        /* 1. Locked State (Gray & Unclickable) */
+        .module-card.locked, .assessment-card.locked {
+            filter: grayscale(100%);
+            opacity: 0.6;
+            pointer-events: none;
+            cursor: not-allowed;
+            position: relative;
+        }
+
+        /* Lock Icon Overlay */
+        .module-card.locked::after, .assessment-card.locked::after {
+            content: "🔒";
+            font-size: 4rem;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+            text-shadow: 0 0 15px rgba(255,255,255, 0.8);
+        }
+
+        .module-card.locked:hover, .assessment-card.locked:hover {
+            transform: none;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+            border-color: transparent;
+        }
+
+        /* 2. Completed State (Green) */
+        .module-card.completed {
+            border-color: var(--success-color);
+            box-shadow: 0 4px 15px rgba(40, 167, 69, 0.2);
+        }
+
+        /* The Green Header when completed */
+        .module-card.completed .module-header {
+            background: var(--success-color);
+        }
+        
+        .module-card.completed .lesson-number {
+            background-color: var(--success-color);
+        }
+
+        /* --- THE TICK MARK (Top Right) --- */
+        .module-card.completed::before {
+            content: "✔";
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background-color: var(--success-color);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1rem;
+            z-index: 20;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            border: 2px solid white;
+        }
+
+        /* ---------------------------------------------- */
+
+        .module-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: var(--white-color);
+            padding: 25px;
+            text-align: center;
+        }
+
+        .module-number {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.9;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+
+        .module-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            line-height: 1.3;
+        }
+
+        .module-lessons {
+            padding: 20px;
+            flex-grow: 1;
+        }
+
+        .lesson-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--light-gray-color);
+            transition: background-color 0.2s ease;
+        }
+
+        .lesson-item:last-child {
+            border-bottom: none;
+        }
+
+        .lesson-item:hover {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            margin: 0 -10px;
+            padding-left: 10px;
+            padding-right: 10px;
+        }
+
+        .lesson-number {
+            background-color: var(--primary-color);
+            color: var(--white-color);
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.85rem;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+
+        .lesson-content {
+            flex-grow: 1;
+        }
+
+        .lesson-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-color);
+            margin-bottom: 3px;
+        }
+
+        .lesson-description {
+            font-size: 0.85rem;
+            color: #6c757d;
+            line-height: 1.4;
+        }
+
+        .lesson-arrow {
+            color: var(--primary-color);
+            font-size: 1.2rem;
+            transition: transform 0.2s ease;
+            margin-left: 10px;
+        }
+
+        .lesson-item:hover .lesson-arrow {
+            transform: translateX(5px);
+        }
+
+        /* Assessment Card */
+        .assessment-card {
+            background: linear-gradient(135deg, #dc3545, #c82333);
+            color: var(--white-color);
+            grid-column: 1 / -1; /* Spans full width */
+            padding: 40px;
+            text-align: center;
+            border-radius: 20px;
+            margin-top: 20px;
+            box-shadow: 0 10px 30px rgba(220, 53, 69, 0.2);
+            position: relative; /* Added for Lock Icon */
+        }
+
+        .assessment-card h3 {
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+
+        .assessment-card p {
+            font-size: 1.1rem;
+            margin-bottom: 25px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .assessment-button {
+            background-color: var(--white-color);
+            color: #dc3545;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .assessment-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+        }
+
+        /* --- Footer --- */
+        footer {
+            padding: 30px 40px;
+            border-top: 1px solid var(--light-gray-color);
+            text-align: center;
+            background-color: #f8f9fa;
+            flex-shrink: 0;
+            margin-top: auto;
+        }
+
+        footer p {
+            font-size: 0.95rem;
+            color: #6c757d;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .module-card {
+            animation: fadeInUp 0.6s ease-in-out;
+            animation-fill-mode: both;
+        }
+
+        .module-card:nth-child(1) { animation-delay: 0.1s; }
+        .module-card:nth-child(2) { animation-delay: 0.2s; }
+        .module-card:nth-child(3) { animation-delay: 0.3s; }
+        .module-card:nth-child(4) { animation-delay: 0.4s; }
+        .module-card:nth-child(5) { animation-delay: 0.5s; }
+        .module-card:nth-child(6) { animation-delay: 0.6s; }
+
+        /* ---------------------------------------------------- */
+        /* --- HIGHLY RESPONSIVE MEDIA QUERIES FOR MOBILE --- */
+        /* ---------------------------------------------------- */
+
+        /* Tablet (max-width: 1024px) */
+        @media (max-width: 1024px) {
+            main {
+                padding: 40px 30px;
+            }
+            
+            .modules-grid {
+                grid-template-columns: repeat(2, 1fr); /* 2 columns on tablet */
+            }
+            
+            .welcome-content h1 {
+                font-size: 2.5rem;
+            }
+        }
+
+        /* Mobile Large (max-width: 768px) */
+        @media (max-width: 768px) {
+            header {
+                padding: 15px 20px;
+                flex-direction: column; /* Stack header items */
+                gap: 15px;
+            }
+
+            .course-title {
+                font-size: 0.95rem;
+                padding: 8px 16px;
+                width: 100%; /* Full width badge on mobile */
+                max-width: 300px;
+            }
+
+            main {
+                padding: 25px 20px; /* Reduced padding */
+            }
+
+            .welcome-content {
+                padding: 30px 20px; /* Much smaller padding inside welcome box */
+                margin-bottom: 30px;
+            }
+
+            .welcome-content h1 {
+                font-size: 1.8rem; /* Smaller title */
+            }
+
+            .welcome-content p {
+                font-size: 1rem;
+            }
+
+            .modules-grid {
+                grid-template-columns: 1fr; /* 1 column on mobile */
+                gap: 20px;
+            }
+
+            .assessment-card {
+                padding: 30px 20px;
+            }
+
+            .assessment-card h3 {
+                font-size: 1.6rem;
+            }
+        }
+
+        /* Mobile Small (max-width: 480px) */
+        @media (max-width: 480px) {
+            .logo {
+                font-size: 1.5rem;
+            }
+
+            .welcome-content h1 {
+                font-size: 1.6rem;
+            }
+
+            /* Adjust list items for very small screens */
+            .lesson-item:hover {
+                margin: 0; /* Remove hover expansion on small touch screens */
+                padding-left: 0;
+                padding-right: 0;
+            }
+            
+            .lesson-item {
+                padding: 15px 0; /* Larger touch targets */
+            }
+
+            .assessment-button {
+                width: 100%; /* Full width button */
+            }
+
+            footer {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <button class="reset-btn" onclick="resetProgress()" title="Reset All Progress">↺</button>
+
+    <div class="course-container">
+        <header>
+            <div class="logo">Skill<span>Trail</span></div>
+            <div class="course-title">Health & Safety in the Workplace</div>
+        </header>
+
+        <main>
+            <div class="welcome-content">
+                <h1>Health & Safety in the Workplace</h1>
+                <p>Welcome to this comprehensive training course on workplace health and safety. Learn essential practices to create a safe working environment for everyone.</p>
+            </div>
+
+            <div class="modules-grid">
+                <div class="module-card" id="mod1" onclick="handleModuleClick(1, 'module1-lesson1.html')">
+                    <div class="module-header">
+                        <div class="module-number">Module 1</div>
+                        <div class="module-title">Introduction to Health & Safety</div>
+                    </div>
+                    <div class="module-lessons">
+                        <div class="lesson-item">
+                            <div class="lesson-number">1</div>
+                            <div class="lesson-content">
+                                <div class="lesson-title">What Health & Safety Means</div>
+                                <div class="lesson-description">Understanding fundamentals</div>
+                            </div>
+                            <div class="lesson-arrow">→</div>
+                        </div>
+                        <div class="lesson-item">
+                            <div class="lesson-number">2</div>
+                            <div class="lesson-content">
+                                <div class="lesson-title">Legal Responsibilities</div>
+                                <div class="lesson-description">Employer and employee duties</div>
+                            </div>
+                            <div class="lesson-arrow">→</div>
+                        </div>
+                        <div class="lesson-item">
+                            <div class="lesson-number">3</div>
+                            <div class="lesson-content">
+                                <div class="lesson-title">Safety Culture</div>
+                                <div class="lesson-description">Building positive culture</div>
+                            </div>
+                            <div class="lesson-arrow">→</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="module-card locked" id="mod2" onclick="handleModuleClick(2, 'module2-lesson1.html')">
+                    <div class="module-header">
+                        <div class="module-number">Module 2</div>
+                        <div class="module-title">Identifying Workplace Hazards</div>
+                    </div>
+                    <div class="module-lessons">
+                        <div class="lesson-item">
+                            <div class="lesson-number">1</div>
+                            <div class="lesson-content">
+                                <div class="lesson-title">Common Hazards</div>
+                                <div class="lesson-description">Physical, chemical, ergonomic</div>
+                            </div>
+                            <div class="lesson-arrow">→</div>
+                        </div>
+                        <div class="lesson-item">
+                            <div class="lesson-number">2</div>
+                            <div class="lesson-content">
+                                <div class="lesson-title">Spotting Risks</div>
+                                <div class="lesson-description">Risks in work activities</div>
+                            </div>
+                            <div class="lesson-arrow">→</div>
+                        </div>
+                        <div class="lesson-item">
+                            <div class="lesson-number">3</div>
+                            <div class="lesson-content">
+                                <div class="lesson-title">Reporting Unsafe Conditions</div>
+                                <div class="lesson-description">Reporting hazards</div>
+                            </div>
+                            <div class="lesson-arrow">→</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="module-card locked" id="mod3" onclick="handleModuleClick(3, 'module3-lesson1.html')">
+                    <div class="module-header">
+                        <div class="module-number">Module 3</div>
+                        <div class="module-title">Risk Assessment & Control</div>
+                    </div>
+                    <div class="module-lessons">
+                        <div class="lesson-item">
+                            <div class="lesson-number">1</div>
+                            <div class="lesson-content">
+                                <div class="lesson-title">Risk Assessment</div>
+                                <div class="lesson-description">What is risk assessment</div>
+                            </div>
+                            <div class="lesson-arrow">→</div>
+                        </div>
+                        <div class="lesson-item">
+                            <div class="lesson-number">2</div>
+                            <div class="lesson-content">
+                                <div class="lesson-title">Five Steps of Assessment</div>
+                                <div class="lesson-description">Step-by-step process</div>
+                            </div>
+                            <div class="lesson-arrow">→</div>
+                        </div>
+                        <div class="lesson-item">
+                            <div class="lesson-number">3</div>
+                            <div class="lesson-content">
+                                <div class="lesson-title">Hierarchy of Control</div>
+                                <div class="lesson-description">Control measures ranking</div>
+                            </div>
+                            <div class="lesson-arrow">→</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="module-card locked" id="mod4" onclick="handleModuleClick(4, 'module4-lesson1.html')">
+                    <div class="module-header">
+                        <div class="module-number">Module 4</div>
+                        <div class="module-title">Safe Working Practices</div>
+                    </div>
+                    <div class="module-lessons">
+                        <div class="lesson-item">
+                            <div class="lesson-number">1</div>
+                            <div class="lesson-content">
+                                <div class="lesson-title">Manual Handling & Falls</div>
+                                <div class="lesson-description">Preventing slips and falls</div>
+                            </div>
+                            <div class="lesson-arrow">→</div>
+                        </div>
+                        <div class="lesson-item">
+                            <div class="lesson-number">2</div>
+                            <div class="lesson-content">
+                                <div class="lesson-title">Tools, Machinery & PPE</div>
+                                <div class="lesson-description">Safe equipment usage</div>
+                            </div>
+                            <div class="lesson-arrow">→</div>
+                        </div>
+                        <div class="lesson-item">
+                            <div class="lesson-number">3</div>
+                            <div class="lesson-content">
+                                <div class="lesson-title">Fire Safety Basics</div>
+                                <div class="lesson-description">Prevention and response</div>
+                            </div>
+                            <div class="lesson-arrow">→</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="module-card locked" id="mod5" onclick="handleModuleClick(5, 'module5-lesson1.html')">
+                    <div class="module-header">
+                        <div class="module-number">Module 5</div>
+                        <div class="module-title">Emergency Procedures</div>
+                    </div>
+                    <div class="module-lessons">
+                        <div class="lesson-item">
+                            <div class="lesson-number">1</div>
+                            <div class="lesson-content">
+                                <div class="lesson-title">Emergency Response</div>
+                                <div class="lesson-description">What to do in emergencies</div>
+                            </div>
+                            <div class="lesson-arrow">→</div>
+                        </div>
+                        <div class="lesson-item">
+                            <div class="lesson-number">2</div>
+                            <div class="lesson-content">
+                                <div class="lesson-title">Incident Reporting</div>
+                                <div class="lesson-description">Reporting accidents</div>
+                            </div>
+                            <div class="lesson-arrow">→</div>
+                        </div>
+                        <div class="lesson-item">
+                            <div class="lesson-number">3</div>
+                            <div class="lesson-content">
+                                <div class="lesson-title">Records & Follow-Up</div>
+                                <div class="lesson-description">Accurate records</div>
+                            </div>
+                            <div class="lesson-arrow">→</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="module-card locked" id="mod6" onclick="handleModuleClick(6, 'module6-lesson1.html')">
+                    <div class="module-header">
+                        <div class="module-number">Module 6</div>
+                        <div class="module-title">Building Safe Environment</div>
+                    </div>
+                    <div class="module-lessons">
+                        <div class="lesson-item">
+                            <div class="lesson-number">1</div>
+                            <div class="lesson-content">
+                                <div class="lesson-title">Wellbeing & Mental Health</div>
+                                <div class="lesson-description">Promoting wellbeing</div>
+                            </div>
+                            <div class="lesson-arrow">→</div>
+                        </div>
+                        <div class="lesson-item">
+                            <div class="lesson-number">2</div>
+                            <div class="lesson-content">
+                                <div class="lesson-title">Communication & Training</div>
+                                <div class="lesson-description">Continuous improvement</div>
+                            </div>
+                            <div class="lesson-arrow">→</div>
+                        </div>
+                        <div class="lesson-item">
+                            <div class="lesson-number">3</div>
+                            <div class="lesson-content">
+                                <div class="lesson-title">Embedding Safety</div>
+                                <div class="lesson-description">Safety in daily behavior</div>
+                            </div>
+                            <div class="lesson-arrow">→</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="assessment-card locked" id="assessmentCard">
+                    <h3>🏆 Final Assessment</h3>
+                    <p>Test your knowledge with our comprehensive quiz. Pass with 80% to earn your certificate!</p>
+                    <button class="assessment-button" onclick="location.href='final-assessment.html'">Start Assessment</button>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>Complete all modules to build comprehensive health and safety knowledge for your workplace.</p>
+        </footer>
+    </div>
+
+    <script>
+        // 1. Get current progress from browser memory (defaults to 1 if nothing saved)
+        let currentLevel = localStorage.getItem('userLevel') || 1; 
+
+        // 2. Function to Update the UI based on progress
+        function updateUI() {
+            // A. Update Modules 1-6
+            for (let i = 1; i <= 6; i++) {
+                const card = document.getElementById('mod' + i);
+                if (!card) continue; 
+
+                // Reset classes first
+                card.classList.remove('locked', 'completed');
+                
+                if (i < currentLevel) {
+                    // Logic: Module is COMPLETED (Green + Tick)
+                    card.classList.add('completed');
+                } else if (i == currentLevel) {
+                    // Logic: Module is CURRENT (Unlocked, Normal)
+                } else {
+                    // Logic: Module is FUTURE (Locked, Gray)
+                    card.classList.add('locked');
+                }
+            }
+
+            // B. Update Assessment Card (Only unlock if level > 6)
+            const assessment = document.getElementById('assessmentCard');
+            assessment.classList.remove('locked');
+            
+            // If user hasn't finished module 6 (so level is still 6 or less), lock assessment
+            if (currentLevel <= 6) {
+                assessment.classList.add('locked');
+            }
+        }
+
+        // 3. Function to handle clicking a module
+        function handleModuleClick(moduleNum, linkUrl) {
+            // Only allow interaction if we are at this level or below
+            if (moduleNum <= currentLevel) {
+                
+                // If we click the CURRENT level module, assume user finishes it and unlock next.
+                if (moduleNum == currentLevel) {
+                    let nextLevel = parseInt(currentLevel) + 1;
+                    localStorage.setItem('userLevel', nextLevel);
+                }
+
+                // Navigate to the link
+                location.href = linkUrl;
+            }
+        }
+
+        // 4. Function to Reset Progress (Called by Button)
+        function resetProgress() {
+            localStorage.setItem('userLevel', 1);
+            location.reload();
+        }
+
+        // Run the UI update on page load
+        document.addEventListener('DOMContentLoaded', updateUI);
+    </script>
+
+</body>
+</html>

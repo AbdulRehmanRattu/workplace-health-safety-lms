@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module 5 Lesson 3 - Health & Safety in the Workplace</title>
+    <style>
+        /* --- Google Font Import --- */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+        /* --- CSS Variables --- */
+        :root {
+            --primary-color: #20B2AA;
+            --secondary-color: #008B8B;
+            --background-color: #f4f7f9;
+            --text-color: #333;
+            --light-gray-color: #e9ecef;
+            --white-color: #ffffff;
+            --success-color: #28a745;
+            --danger-color: #dc3545;
+            --font-family: 'Poppins', sans-serif;
+        }
+
+        /* --- General Reset --- */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            width: 100%;
+            overflow-x: hidden; /* Critical to prevent horizontal scroll */
+        }
+
+        body {
+            font-family: var(--font-family);
+            background: linear-gradient(135deg, #f8fffe, #e8f5f5);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+        }
+
+        /* --- Main Course Container --- */
+        .course-container {
+            width: 100%; /* Changed from 100vw to 100% */
+            min-height: 100vh;
+            background: var(--white-color);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        /* --- Header --- */
+        header {
+            padding: 20px 40px;
+            border-bottom: 1px solid var(--light-gray-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-shrink: 0;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+        .logo span {
+            font-weight: 300;
+        }
+
+        .course-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            background-color: var(--primary-color);
+            color: var(--white-color);
+            padding: 12px 25px;
+            border-radius: 25px;
+            text-align: center;
+        }
+
+        /* --- Main Content Area --- */
+        main {
+            flex-grow: 1;
+            padding: 50px 60px;
+            width: 100%;
+        }
+
+        .lesson-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .lesson-header h1 {
+            font-size: 3.2rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            line-height: 1.2;
+        }
+
+        .lesson-header h2 {
+            font-size: 2rem;
+            color: var(--secondary-color);
+            font-weight: 400;
+            line-height: 1.3;
+        }
+
+        /* --- Flip Cards Grid (Flexbox for centering bottom row) --- */
+        .flip-cards-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 25px;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding-bottom: 40px;
+        }
+
+        .flip-card {
+            perspective: 1000px;
+            cursor: pointer;
+            width: calc(33.333% - 25px); /* 3 cards per row desktop */
+            min-height: 300px;
+            position: relative;
+        }
+
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.6s ease-in-out;
+            transform-style: preserve-3d;
+        }
+
+        .flip-card.flipped .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 25px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+            top: 0;
+            left: 0;
+        }
+
+        .flip-card-front {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: var(--white-color);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .flip-card:hover .flip-card-front {
+            box-shadow: 0 10px 25px rgba(32, 178, 170, 0.4);
+            transform: translateY(-5px);
+        }
+
+        .flip-card-back {
+            background-color: #e0f2f1; /* Light teal background */
+            color: var(--text-color);
+            transform: rotateY(180deg);
+            border: 3px solid var(--primary-color);
+        }
+
+        .card-icon {
+            margin-bottom: 20px;
+            font-size: 3rem;
+        }
+
+        .card-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            line-height: 1.3;
+        }
+
+        .card-content {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            text-align: center;
+            color: #333;
+        }
+
+        /* --- Footer & Navigation (Strictly Matching Previous Specs) --- */
+        footer {
+            padding: 20px 40px;
+            border-top: 1px solid var(--light-gray-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-shrink: 0;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .navigation-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .navigation-buttons button {
+            background-color: var(--primary-color);
+            color: var(--white-color);
+            border: none;
+            padding: 15px 35px; /* Exact match */
+            border-radius: 25px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            text-decoration: none;
+            display: inline-block;
+            min-width: 160px; /* Exact match */
+            text-align: center;
+        }
+
+        .navigation-buttons button:hover {
+            background-color: var(--secondary-color);
+            transform: scale(1.05);
+        }
+
+        .navigation-buttons a {
+            text-decoration: none;
+        }
+
+        #prev-btn {
+            background-color: #6c757d;
+        }
+        #prev-btn:hover {
+            background-color: #5a6268;
+        }
+
+        .lesson-info {
+            font-size: 1.1rem;
+            color: #6c757d;
+            font-weight: 500;
+        }
+
+        /* Animations */
+        @keyframes fadeInScale {
+            from { opacity: 0; transform: scale(0.8); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .flip-card {
+            animation: fadeInScale 0.6s ease-in-out;
+        }
+        .flip-card:nth-child(1) { animation-delay: 0.1s; }
+        .flip-card:nth-child(2) { animation-delay: 0.2s; }
+        .flip-card:nth-child(3) { animation-delay: 0.3s; }
+        .flip-card:nth-child(4) { animation-delay: 0.4s; }
+        .flip-card:nth-child(5) { animation-delay: 0.5s; }
+
+        /* --- RESPONSIVE DESIGN --- */
+
+        /* Tablet (max 991px) */
+        @media (max-width: 991px) {
+            header {
+                padding: 18px 25px;
+            }
+            main {
+                padding: 30px 30px;
+            }
+            .lesson-header h1 {
+                font-size: 2.8rem;
+            }
+            .lesson-header h2 {
+                font-size: 1.8rem;
+            }
+            
+            /* 2 Columns on Tablet */
+            .flip-card {
+                width: calc(50% - 20px);
+            }
+        }
+
+        /* Mobile (max 768px) */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                text-align: center;
+                gap: 10px;
+            }
+            
+            .lesson-header h1 {
+                font-size: 2.2rem;
+            }
+            .lesson-header h2 {
+                font-size: 1.4rem;
+            }
+            
+            /* 1 Column on Mobile */
+            .flip-card {
+                width: 100%;
+                min-height: 250px;
+            }
+            
+            footer {
+                padding: 18px 25px;
+                flex-direction: column;
+                text-align: center;
+                gap: 15px;
+            }
+        }
+
+        /* Small Mobile (max 575px) - Matches Previous Footer Logic */
+        @media (max-width: 575px) {
+            header {
+                padding: 15px 20px;
+            }
+            
+            .course-title {
+                font-size: 1rem;
+                padding: 8px 16px;
+                white-space: normal;
+                line-height: 1.4;
+            }
+            
+            main {
+                padding: 20px 15px;
+            }
+            
+            .lesson-header h1 {
+                font-size: 1.8rem;
+            }
+
+            /* Footer Button Stacking Logic */
+            .lesson-info {
+                font-size: 1rem;
+                order: 2; /* Move text below buttons */
+            }
+
+            .navigation-buttons {
+                order: 1; /* Move buttons above text */
+                justify-content: center;
+                width: 100%;
+                flex-direction: column; /* Stack buttons */
+                gap: 10px;
+            }
+
+            .navigation-buttons button {
+                font-size: 1rem;
+                padding: 12px 20px;
+                width: 100%; /* Full width */
+                max-width: 300px;
+                min-width: unset;
+                margin: 0 auto;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="course-container">
+        <header>
+            <div class="logo">Skill<span>Trail</span></div>
+            <div class="course-title">Health & Safety in the Workplace</div>
+        </header>
+
+        <main>
+            <div class="lesson-header">
+                <h1>Module 5: Emergency Procedures and Incident Reporting</h1>
+                <h2>Lesson 3: The Importance of Accurate Records and Follow-Up Actions</h2>
+            </div>
+
+            <div class="flip-cards-container">
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <div class="card-icon">📄</div>
+                            <div class="card-title">Why accurate records matter</div>
+                        </div>
+                        <div class="flip-card-back">
+                            <div class="card-content">
+                                Detailed records provide evidence of incidents, support investigations, and help organisations comply with legal requirements.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <div class="card-icon">📊</div>
+                            <div class="card-title">Tracking and analysing trends</div>
+                        </div>
+                        <div class="flip-card-back">
+                            <div class="card-content">
+                                Recording all incidents, including near misses, helps identify patterns and recurring hazards that may need further attention.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <div class="card-icon">📋</div>
+                            <div class="card-title">Ensuring accountability</div>
+                        </div>
+                        <div class="flip-card-back">
+                            <div class="card-content">
+                                Accurate documentation clarifies who was involved, what actions were taken, and whether proper safety procedures were followed.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <div class="card-icon">⚙️</div>
+                            <div class="card-title">Driving continuous improvement</div>
+                        </div>
+                        <div class="flip-card-back">
+                            <div class="card-content">
+                                Follow-up reviews after incidents help strengthen safety systems, update training, and prevent similar events in the future.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <div class="card-icon">🤝</div>
+                            <div class="card-title">Building organisational trust</div>
+                        </div>
+                        <div class="flip-card-back">
+                            <div class="card-content">
+                                Transparent record-keeping demonstrates a commitment to safety and encourages employees to report concerns responsibly.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <div class="lesson-info">Module 5 - Lesson 3</div>
+            <div class="navigation-buttons">
+                <a href="module5-lesson2.html"><button id="prev-btn">Previous Lesson</button></a>
+                <a href="index.html"><button>Back to Main Menu</button></a>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const flipCards = document.querySelectorAll('.flip-card');
+            
+            flipCards.forEach(card => {
+                card.addEventListener('click', () => {
+                    card.classList.toggle('flipped');
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>

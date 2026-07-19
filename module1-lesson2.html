@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module 1 Lesson 2 - Health & Safety in the Workplace</title>
+    <style>
+        /* --- Google Font Import --- */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+        /* --- CSS Variables for Easy Theming --- */
+        :root {
+            --primary-color: #20B2AA;
+            --secondary-color: #008B8B;
+            --background-color: #f4f7f9;
+            --text-color: #333;
+            --light-gray-color: #e9ecef;
+            --white-color: #ffffff;
+            --success-color: #28a745;
+            --danger-color: #dc3545;
+            --font-family: 'Poppins', sans-serif;
+        }
+
+        /* --- General Body & Reset Styles --- */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background-color: var(--background-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            /* Allow vertical scrolling on mobile */
+        }
+
+        /* --- Main Course Container - RESPONSIVE SCREEN --- */
+        .course-container {
+            width: 100%;
+            min-height: 100vh;
+            background: var(--white-color);
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* --- Header --- */
+        header {
+            padding: 20px 40px;
+            border-bottom: 1px solid var(--light-gray-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-shrink: 0;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+        .logo span {
+            font-weight: 300;
+        }
+
+        .course-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            background-color: var(--primary-color);
+            color: var(--white-color);
+            padding: 12px 25px;
+            border-radius: 25px;
+            text-align: center;
+            white-space: nowrap;
+        }
+
+        /* --- Main Content Area --- */
+        main {
+            flex-grow: 1;
+            padding: 50px 60px;
+            overflow-y: auto;
+        }
+
+        .lesson-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .lesson-header h1 {
+            font-size: 3.2rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            line-height: 1.2;
+        }
+
+        .lesson-header h2 {
+            font-size: 2rem;
+            color: var(--secondary-color);
+            font-weight: 400;
+            line-height: 1.3;
+        }
+
+        /* Interactive Content Area */
+        .interactive-content {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .click-reveal-item {
+            margin-bottom: 25px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .click-reveal-header {
+            background-color: var(--primary-color);
+            color: var(--white-color);
+            padding: 25px 30px;
+            cursor: pointer;
+            font-size: 1.5rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative;
+            word-wrap: break-word;
+            line-height: 1.4;
+        }
+
+        .click-reveal-header:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 6px 20px rgba(32, 178, 170, 0.3);
+        }
+
+        .click-reveal-header.active {
+            background-color: var(--secondary-color);
+        }
+
+        .click-reveal-header::after {
+            content: '+';
+            position: absolute;
+            right: 30px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 2rem;
+            transition: transform 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .click-reveal-header.active::after {
+            transform: translateY(-50%) rotate(45deg);
+        }
+
+        .click-reveal-content {
+            background-color: var(--white-color);
+            padding: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.5s ease;
+            opacity: 0;
+        }
+
+        .click-reveal-content.active {
+            padding: 30px;
+            max-height: 300px;
+            opacity: 1;
+        }
+
+        .click-reveal-content p {
+            font-size: 1.3rem;
+            line-height: 1.7;
+            margin: 0;
+            word-wrap: break-word;
+        }
+
+        /* --- Footer & Navigation --- */
+        footer {
+            padding: 20px 40px;
+            border-top: 1px solid var(--light-gray-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-shrink: 0;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .navigation-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .navigation-buttons button {
+            background-color: var(--primary-color);
+            color: var(--white-color);
+            border: none;
+            padding: 15px 35px;
+            border-radius: 25px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            text-decoration: none;
+            display: inline-block;
+            min-width: 160px;
+            text-align: center;
+        }
+
+        .navigation-buttons button:hover {
+            background-color: var(--secondary-color);
+            transform: scale(1.05);
+        }
+
+        .navigation-buttons a {
+            text-decoration: none;
+        }
+
+        #prev-btn {
+            background-color: #6c757d;
+        }
+        #prev-btn:hover {
+            background-color: #5a6268;
+        }
+
+        .lesson-info {
+            font-size: 1.1rem;
+            color: #6c757d;
+            font-weight: 500;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .click-reveal-item {
+            animation: fadeInUp 0.6s ease-in-out;
+        }
+
+        .click-reveal-item:nth-child(1) { animation-delay: 0.1s; }
+        .click-reveal-item:nth-child(2) { animation-delay: 0.2s; }
+        .click-reveal-item:nth-child(3) { animation-delay: 0.3s; }
+        .click-reveal-item:nth-child(4) { animation-delay: 0.4s; }
+        .click-reveal-item:nth-child(5) { animation-delay: 0.5s; }
+
+        /* --- ENHANCED RESPONSIVE DESIGN --- */
+
+        /* Large Desktop (1200px+) */
+        @media (min-width: 1200px) {
+            main {
+                padding: 60px 80px;
+            }
+            
+            .lesson-header h1 {
+                font-size: 3.5rem;
+            }
+            
+            .lesson-header h2 {
+                font-size: 2.2rem;
+            }
+            
+            .click-reveal-header {
+                font-size: 1.6rem;
+                padding: 30px 35px;
+            }
+            
+            .click-reveal-content p {
+                font-size: 1.4rem;
+            }
+        }
+
+        /* Desktop (992px - 1199px) */
+        @media (max-width: 1199px) and (min-width: 992px) {
+            main {
+                padding: 50px 60px;
+            }
+            
+            .lesson-header h1 {
+                font-size: 3.2rem;
+            }
+            
+            .lesson-header h2 {
+                font-size: 2rem;
+            }
+        }
+
+        /* Tablet Landscape (768px - 991px) */
+        @media (max-width: 991px) and (min-width: 768px) {
+            header {
+                padding: 20px 30px;
+            }
+            
+            main {
+                padding: 40px 50px;
+            }
+            
+            .lesson-header h1 {
+                font-size: 2.8rem;
+            }
+            
+            .lesson-header h2 {
+                font-size: 1.8rem;
+            }
+            
+            .click-reveal-header {
+                font-size: 1.4rem;
+                padding: 22px 25px;
+            }
+            
+            .click-reveal-content p {
+                font-size: 1.2rem;
+            }
+            
+            .click-reveal-content.active {
+                max-height: 280px;
+            }
+        }
+
+        /* Tablet Portrait & Large Mobile (576px - 767px) */
+        @media (max-width: 767px) and (min-width: 576px) {
+            header {
+                padding: 18px 25px;
+                flex-direction: column;
+                text-align: center;
+                gap: 10px;
+            }
+            
+            .logo {
+                font-size: 1.6rem;
+            }
+            
+            .course-title {
+                font-size: 1.1rem;
+                padding: 10px 20px;
+                white-space: normal;
+                max-width: 100%;
+            }
+            
+            main {
+                padding: 35px 30px;
+            }
+            
+            .lesson-header {
+                margin-bottom: 35px;
+            }
+            
+            .lesson-header h1 {
+                font-size: 2.4rem;
+                margin-bottom: 12px;
+            }
+            
+            .lesson-header h2 {
+                font-size: 1.6rem;
+            }
+            
+            .click-reveal-header {
+                font-size: 1.3rem;
+                padding: 20px 25px;
+                padding-right: 60px;
+            }
+            
+            .click-reveal-header::after {
+                right: 25px;
+                font-size: 1.8rem;
+            }
+            
+            .click-reveal-content p {
+                font-size: 1.1rem;
+            }
+            
+            .click-reveal-content.active {
+                padding: 25px;
+                max-height: 320px;
+            }
+            
+            footer {
+                padding: 18px 25px;
+                flex-direction: column;
+                text-align: center;
+                gap: 15px;
+            }
+            
+            .navigation-buttons {
+                justify-content: center;
+                width: 100%;
+            }
+            
+            .navigation-buttons button {
+                font-size: 1.1rem;
+                padding: 12px 25px;
+                min-width: 160px;
+            }
+        }
+
+        /* Mobile (320px - 575px) */
+        @media (max-width: 575px) {
+            header {
+                padding: 15px 20px;
+                flex-direction: column;
+                text-align: center;
+                gap: 10px;
+            }
+            
+            .logo {
+                font-size: 1.5rem;
+            }
+            
+            .course-title {
+                font-size: 1rem;
+                padding: 8px 16px;
+                white-space: normal;
+                max-width: 100%;
+                line-height: 1.4;
+            }
+            
+            main {
+                padding: 25px 20px;
+            }
+            
+            .lesson-header {
+                margin-bottom: 30px;
+            }
+            
+            .lesson-header h1 {
+                font-size: 2rem;
+                margin-bottom: 10px;
+            }
+            
+            .lesson-header h2 {
+                font-size: 1.4rem;
+            }
+            
+            .click-reveal-item {
+                margin-bottom: 20px;
+            }
+            
+            .click-reveal-header {
+                font-size: 1.2rem;
+                padding: 18px 20px;
+                padding-right: 55px;
+                line-height: 1.3;
+            }
+            
+            .click-reveal-header::after {
+                right: 20px;
+                font-size: 1.6rem;
+            }
+            
+            .click-reveal-content p {
+                font-size: 1rem;
+                line-height: 1.6;
+            }
+            
+            .click-reveal-content.active {
+                padding: 20px;
+                max-height: 350px;
+            }
+            
+            footer {
+                padding: 15px 20px;
+                flex-direction: column;
+                text-align: center;
+                gap: 12px;
+            }
+            
+            .lesson-info {
+                font-size: 1rem;
+                order: 2;
+            }
+            
+            .navigation-buttons {
+                order: 1;
+                justify-content: center;
+                width: 100%;
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .navigation-buttons button {
+                font-size: 1rem;
+                padding: 12px 20px;
+                width: 100%;
+                max-width: 250px;
+                margin: 0 auto;
+            }
+        }
+
+        /* Extra Small Mobile (Below 320px) */
+        @media (max-width: 319px) {
+            .lesson-header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .lesson-header h2 {
+                font-size: 1.3rem;
+            }
+            
+            .click-reveal-header {
+                font-size: 1.1rem;
+                padding: 16px 18px;
+                padding-right: 50px;
+            }
+            
+            .click-reveal-header::after {
+                right: 18px;
+                font-size: 1.4rem;
+            }
+            
+            .click-reveal-content p {
+                font-size: 0.95rem;
+            }
+            
+            .click-reveal-content.active {
+                padding: 18px;
+            }
+        }
+
+        /* Touch Device Optimizations */
+        @media (hover: none) and (pointer: coarse) {
+            .click-reveal-header {
+                padding: 22px 25px;
+                padding-right: 60px;
+                min-height: 60px;
+                display: flex;
+                align-items: center;
+            }
+            
+            .click-reveal-header:hover {
+                transform: none;
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            }
+            
+            .navigation-buttons button:hover {
+                transform: none;
+            }
+        }
+
+        /* High DPI Displays */
+        @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx) {
+            .click-reveal-header::after {
+                font-weight: 300;
+            }
+        }
+
+        /* Landscape Mobile Orientation */
+        @media (max-width: 767px) and (orientation: landscape) {
+            .lesson-header h1 {
+                font-size: 2.2rem;
+            }
+            
+            .lesson-header h2 {
+                font-size: 1.5rem;
+            }
+            
+            main {
+                padding: 30px 25px;
+            }
+            
+            .lesson-header {
+                margin-bottom: 30px;
+            }
+        }
+
+        /* Accessibility: Reduced Motion */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+            
+            .click-reveal-item {
+                animation: none;
+            }
+        }
+
+        /* Print Styles */
+        @media print {
+            .course-container {
+                background: white;
+            }
+            
+            header, footer {
+                display: none;
+            }
+            
+            .click-reveal-content {
+                max-height: none !important;
+                opacity: 1 !important;
+                padding: 20px 0 !important;
+            }
+            
+            .click-reveal-header::after {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="course-container">
+        <header>
+            <div class="logo">Skill<span>Trail</span></div>
+            <div class="course-title">Health & Safety in the Workplace</div>
+        </header>
+
+        <main>
+            <div class="lesson-header">
+                <h1>Module 1: Introduction to Health & Safety</h1>
+                <h2>Lesson 2: Employer and Employee Responsibilities Under the Law</h2>
+            </div>
+
+            <div class="interactive-content">
+                <div class="click-reveal-item">
+                    <div class="click-reveal-header" data-target="content1">
+                        Employers must provide a safe workplace
+                    </div>
+                    <div class="click-reveal-content" id="content1">
+                        <p>They are legally required to identify potential hazards, assess risks, and take all reasonable steps to protect staff, visitors, and contractors from harm.</p>
+                    </div>
+                </div>
+
+                <div class="click-reveal-item">
+                    <div class="click-reveal-header" data-target="content2">
+                        Provide training and equipment
+                    </div>
+                    <div class="click-reveal-content" id="content2">
+                        <p>Employers must supply appropriate safety training, guidance, and personal protective equipment (PPE) so everyone can perform their duties safely and confidently.</p>
+                    </div>
+                </div>
+
+                <div class="click-reveal-item">
+                    <div class="click-reveal-header" data-target="content3">
+                        Employees must follow safety procedures
+                    </div>
+                    <div class="click-reveal-content" id="content3">
+                        <p>Workers should follow all safety instructions, use equipment properly, and never take shortcuts that could create risks for themselves or others.</p>
+                    </div>
+                </div>
+
+                <div class="click-reveal-item">
+                    <div class="click-reveal-header" data-target="content4">
+                        Report hazards or incidents immediately
+                    </div>
+                    <div class="click-reveal-content" id="content4">
+                        <p>Any unsafe conditions, accidents, or near misses should be reported right away so action can be taken to prevent future harm.</p>
+                    </div>
+                </div>
+
+                <div class="click-reveal-item">
+                    <div class="click-reveal-header" data-target="content5">
+                        Health and safety is a shared responsibility
+                    </div>
+                    <div class="click-reveal-content" id="content5">
+                        <p>Creating a safe workplace depends on cooperation — employers must lead by example, and employees must stay alert and engaged in keeping everyone safe.</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <div class="lesson-info">Module 1 - Lesson 2</div>
+            <div class="navigation-buttons">
+                <a href="module1-lesson1.html"><button id="prev-btn">Previous Lesson</button></a>
+                <a href="module1-lesson3.html"><button>Next Lesson</button></a>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const headers = document.querySelectorAll('.click-reveal-header');
+            
+            headers.forEach(header => {
+                header.addEventListener('click', () => {
+                    const targetId = header.getAttribute('data-target');
+                    const targetContent = document.getElementById(targetId);
+                    const isActive = header.classList.contains('active');
+                    
+                    // Close all other active items
+                    headers.forEach(h => {
+                        h.classList.remove('active');
+                        const content = document.getElementById(h.getAttribute('data-target'));
+                        content.classList.remove('active');
+                    });
+                    
+                    // Toggle current item
+                    if (!isActive) {
+                        header.classList.add('active');
+                        targetContent.classList.add('active');
+                    }
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>

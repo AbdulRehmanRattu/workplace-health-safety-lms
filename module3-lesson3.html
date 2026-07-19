@@ -1,0 +1,1022 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module 3 Lesson 3 - Health & Safety in the Workplace</title>
+    <style>
+        /* --- Google Font Import --- */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+        /* --- CSS Variables for Easy Theming --- */
+        :root {
+            --primary-color: #20B2AA;
+            --secondary-color: #008B8B;
+            --background-color: #f4f7f9;
+            --text-color: #333;
+            --light-gray-color: #e9ecef;
+            --white-color: #ffffff;
+            --success-color: #28a745;
+            --danger-color: #dc3545;
+            --font-family: 'Poppins', sans-serif;
+        }
+
+        /* --- General Body & Reset Styles --- */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background-color: var(--background-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            /* Allow vertical scrolling on mobile */
+        }
+
+        /* --- Main Course Container - RESPONSIVE SCREEN --- */
+        .course-container {
+            width: 100%;
+            min-height: 100vh;
+            background: var(--white-color);
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* --- Header --- */
+        header {
+            padding: 20px 40px;
+            border-bottom: 1px solid var(--light-gray-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-shrink: 0;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+        .logo span {
+            font-weight: 300;
+        }
+
+        .course-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            background-color: var(--primary-color);
+            color: var(--white-color);
+            padding: 12px 25px;
+            border-radius: 25px;
+            text-align: center;
+            white-space: nowrap;
+        }
+
+        /* --- Main Content Area --- */
+        main {
+            flex-grow: 1;
+            padding: 50px 60px;
+            overflow-y: auto;
+        }
+
+        .lesson-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .lesson-header h1 {
+            font-size: 3.2rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            line-height: 1.2;
+        }
+
+        .lesson-header h2 {
+            font-size: 2rem;
+            color: var(--secondary-color);
+            font-weight: 400;
+            line-height: 1.3;
+        }
+
+        /* Drag-and-Reveal Slider */
+        .slider-container {
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .hierarchy-background {
+            background: linear-gradient(180deg, #f8f9fa 0%, #e9ecef 25%, #dee2e6 50%, #ced4da 75%, #adb5bd 100%);
+            border-radius: 20px;
+            padding: 40px;
+            position: relative;
+            height: 600px;
+            overflow: hidden;
+        }
+
+        .slider-track {
+            position: absolute;
+            left: 50px;
+            top: 40px;
+            bottom: 40px;
+            width: 6px;
+            background-color: var(--light-gray-color);
+            border-radius: 3px;
+        }
+
+        .slider-handle {
+            position: absolute;
+            left: 42px;
+            top: 40px;
+            width: 22px;
+            height: 22px;
+            background-color: var(--primary-color);
+            border-radius: 50%;
+            cursor: grab;
+            box-shadow: 0 4px 15px rgba(32, 178, 170, 0.4);
+            transition: all 0.2s ease;
+            z-index: 10;
+        }
+
+        .slider-handle:hover {
+            transform: scale(1.2);
+            box-shadow: 0 6px 20px rgba(32, 178, 170, 0.6);
+        }
+
+        .slider-handle:active {
+            cursor: grabbing;
+        }
+
+        .hierarchy-levels {
+            margin-left: 100px;
+            height: 100%;
+        }
+
+        .hierarchy-level {
+            height: 18%;
+            display: flex;
+            align-items: center;
+            padding: 15px 18px;
+            border-radius: 15px;
+            margin-bottom: 12px;
+            position: relative;
+            opacity: 0.3;
+            transform: translateY(20px);
+            transition: all 0.6s ease;
+            min-height: 90px;
+        }
+
+        .hierarchy-level.revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .hierarchy-level:nth-child(1) { background: linear-gradient(135deg, #28a745, #20c997); }
+        .hierarchy-level:nth-child(2) { background: linear-gradient(135deg, #17a2b8, #20c997); }
+        .hierarchy-level:nth-child(3) { background: linear-gradient(135deg, #ffc107, #fd7e14); }
+        .hierarchy-level:nth-child(4) { background: linear-gradient(135deg, #fd7e14, #dc3545); }
+        .hierarchy-level:nth-child(5) { background: linear-gradient(135deg, #dc3545, #6f42c1); }
+
+        .level-content {
+            color: white;
+            flex-grow: 1;
+        }
+
+        .level-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 6px;
+            word-wrap: break-word;
+            line-height: 1.3;
+        }
+
+        .level-description {
+            font-size: 0.95rem;
+            line-height: 1.4;
+            word-wrap: break-word;
+        }
+
+        .level-icon {
+            font-size: 2rem;
+            margin-right: 15px;
+            opacity: 0.9;
+            flex-shrink: 0;
+        }
+
+        .level-number {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: rgba(255, 255, 255, 0.9);
+            color: var(--text-color);
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .slider-progress {
+            position: absolute;
+            left: 50px;
+            top: 40px;
+            width: 6px;
+            background: linear-gradient(180deg, var(--primary-color), var(--secondary-color));
+            border-radius: 3px;
+            height: 0%;
+            transition: height 0.3s ease;
+        }
+
+        .completion-message {
+            text-align: center;
+            margin-top: 30px;
+            padding: 20px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border-radius: 15px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+        }
+
+        .completion-message.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- Footer & Navigation --- */
+        footer {
+            padding: 20px 40px;
+            border-top: 1px solid var(--light-gray-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-shrink: 0;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .navigation-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .navigation-buttons button {
+            background-color: var(--primary-color);
+            color: var(--white-color);
+            border: none;
+            padding: 15px 35px;
+            border-radius: 25px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            text-decoration: none;
+            display: inline-block;
+            min-width: 160px;
+            text-align: center;
+        }
+
+        .navigation-buttons button:hover {
+            background-color: var(--secondary-color);
+            transform: scale(1.05);
+        }
+
+        .navigation-buttons a {
+            text-decoration: none;
+        }
+
+        #prev-btn {
+            background-color: #6c757d;
+        }
+        #prev-btn:hover {
+            background-color: #5a6268;
+        }
+
+        .lesson-info {
+            font-size: 1.1rem;
+            color: #6c757d;
+            font-weight: 500;
+        }
+
+        /* --- ENHANCED RESPONSIVE DESIGN --- */
+
+        /* Large Desktop (1200px+) */
+        @media (min-width: 1200px) {
+            main {
+                padding: 60px 80px;
+            }
+            
+            .lesson-header h1 {
+                font-size: 3.5rem;
+            }
+            
+            .lesson-header h2 {
+                font-size: 2.2rem;
+            }
+            
+            .slider-container {
+                max-width: 1000px;
+            }
+            
+            .hierarchy-background {
+                padding: 50px;
+                height: 650px;
+            }
+            
+            .hierarchy-levels {
+                margin-left: 120px;
+            }
+            
+            .hierarchy-level {
+                min-height: 100px;
+                padding: 18px 22px;
+            }
+            
+            .level-title {
+                font-size: 1.35rem;
+                margin-bottom: 8px;
+            }
+            
+            .level-description {
+                font-size: 1.05rem;
+                line-height: 1.4;
+            }
+            
+            .level-icon {
+                font-size: 2.2rem;
+                margin-right: 18px;
+            }
+            
+            .level-number {
+                width: 38px;
+                height: 38px;
+                font-size: 1.15rem;
+            }
+        }
+
+        /* Desktop (992px - 1199px) */
+        @media (max-width: 1199px) and (min-width: 992px) {
+            main {
+                padding: 50px 60px;
+            }
+            
+            .lesson-header h1 {
+                font-size: 3.2rem;
+            }
+            
+            .lesson-header h2 {
+                font-size: 2rem;
+            }
+        }
+
+        /* Tablet Landscape (768px - 991px) */
+        @media (max-width: 991px) and (min-width: 768px) {
+            header {
+                padding: 20px 30px;
+            }
+            
+            main {
+                padding: 40px 50px;
+            }
+            
+            .lesson-header h1 {
+                font-size: 2.8rem;
+            }
+            
+            .lesson-header h2 {
+                font-size: 1.8rem;
+            }
+            
+            .slider-container {
+                max-width: 700px;
+            }
+            
+            .hierarchy-background {
+                padding: 35px;
+                height: 450px;
+            }
+            
+            .hierarchy-levels {
+                margin-left: 90px;
+            }
+            
+            .level-title {
+                font-size: 1.3rem;
+            }
+            
+            .level-description {
+                font-size: 1rem;
+            }
+            
+            .level-icon {
+                font-size: 2.2rem;
+                margin-right: 18px;
+            }
+            
+            .level-number {
+                width: 35px;
+                height: 35px;
+                font-size: 1.1rem;
+            }
+        }
+
+        /* Tablet Portrait & Large Mobile (576px - 767px) */
+        @media (max-width: 767px) and (min-width: 576px) {
+            header {
+                padding: 18px 25px;
+                flex-direction: column;
+                text-align: center;
+                gap: 10px;
+            }
+            
+            .logo {
+                font-size: 1.6rem;
+            }
+            
+            .course-title {
+                font-size: 1.1rem;
+                padding: 10px 20px;
+                white-space: normal;
+                max-width: 100%;
+            }
+            
+            main {
+                padding: 35px 30px;
+            }
+            
+            .lesson-header {
+                margin-bottom: 35px;
+            }
+            
+            .lesson-header h1 {
+                font-size: 2.4rem;
+                margin-bottom: 12px;
+            }
+            
+            .lesson-header h2 {
+                font-size: 1.6rem;
+            }
+            
+            .hierarchy-background {
+                height: auto;
+                min-height: 500px;
+                padding: 30px;
+            }
+            
+            .slider-track,
+            .slider-handle,
+            .slider-progress {
+                display: none;
+            }
+            
+            .hierarchy-levels {
+                margin-left: 0;
+            }
+            
+            .hierarchy-level {
+                opacity: 1;
+                transform: translateY(0);
+                margin-bottom: 15px;
+                height: auto;
+                min-height: 80px;
+                padding: 15px;
+            }
+            
+            .level-title {
+                font-size: 1.2rem;
+                margin-bottom: 8px;
+            }
+            
+            .level-description {
+                font-size: 1rem;
+                line-height: 1.4;
+            }
+            
+            .level-icon {
+                font-size: 2rem;
+                margin-right: 15px;
+            }
+            
+            .level-number {
+                width: 30px;
+                height: 30px;
+                font-size: 1rem;
+                top: -8px;
+                right: -8px;
+            }
+            
+            footer {
+                padding: 18px 25px;
+                flex-direction: column;
+                text-align: center;
+                gap: 15px;
+            }
+            
+            .navigation-buttons {
+                justify-content: center;
+                width: 100%;
+            }
+            
+            .navigation-buttons button {
+                font-size: 1.1rem;
+                padding: 12px 25px;
+                min-width: 160px;
+            }
+        }
+
+        /* Mobile (320px - 575px) */
+        @media (max-width: 575px) {
+            header {
+                padding: 15px 20px;
+                flex-direction: column;
+                text-align: center;
+                gap: 10px;
+            }
+            
+            .logo {
+                font-size: 1.5rem;
+            }
+            
+            .course-title {
+                font-size: 1rem;
+                padding: 8px 16px;
+                white-space: normal;
+                max-width: 100%;
+                line-height: 1.4;
+            }
+            
+            main {
+                padding: 25px 20px;
+            }
+            
+            .lesson-header {
+                margin-bottom: 30px;
+            }
+            
+            .lesson-header h1 {
+                font-size: 2rem;
+                margin-bottom: 10px;
+            }
+            
+            .lesson-header h2 {
+                font-size: 1.4rem;
+            }
+            
+            .hierarchy-background {
+                height: auto;
+                min-height: 450px;
+                padding: 25px;
+            }
+            
+            .slider-track,
+            .slider-handle,
+            .slider-progress {
+                display: none;
+            }
+            
+            .hierarchy-levels {
+                margin-left: 0;
+            }
+            
+            .hierarchy-level {
+                opacity: 1;
+                transform: translateY(0);
+                margin-bottom: 12px;
+                height: auto;
+                min-height: 70px;
+                padding: 12px;
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .level-icon {
+                font-size: 1.8rem;
+                margin-right: 0;
+                margin-bottom: 8px;
+            }
+            
+            .level-content {
+                width: 100%;
+            }
+            
+            .level-title {
+                font-size: 1.1rem;
+                margin-bottom: 6px;
+            }
+            
+            .level-description {
+                font-size: 0.95rem;
+                line-height: 1.4;
+            }
+            
+            .level-number {
+                width: 28px;
+                height: 28px;
+                font-size: 0.9rem;
+                top: -6px;
+                right: -6px;
+            }
+            
+            .completion-message {
+                margin-top: 20px;
+                padding: 15px;
+                font-size: 0.95rem;
+            }
+            
+            footer {
+                padding: 15px 20px;
+                flex-direction: column;
+                text-align: center;
+                gap: 12px;
+            }
+            
+            .lesson-info {
+                font-size: 1rem;
+                order: 2;
+            }
+            
+            .navigation-buttons {
+                order: 1;
+                justify-content: center;
+                width: 100%;
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .navigation-buttons button {
+                font-size: 1rem;
+                padding: 12px 20px;
+                width: 100%;
+                max-width: 250px;
+                margin: 0 auto;
+            }
+        }
+
+        /* Extra Small Mobile (Below 320px) */
+        @media (max-width: 319px) {
+            .lesson-header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .lesson-header h2 {
+                font-size: 1.3rem;
+            }
+            
+            .hierarchy-background {
+                padding: 20px;
+                min-height: 400px;
+            }
+            
+            .hierarchy-level {
+                min-height: 60px;
+                padding: 10px;
+            }
+            
+            .level-icon {
+                font-size: 1.6rem;
+            }
+            
+            .level-title {
+                font-size: 1rem;
+            }
+            
+            .level-description {
+                font-size: 0.9rem;
+            }
+            
+            .level-number {
+                width: 25px;
+                height: 25px;
+                font-size: 0.8rem;
+            }
+        }
+
+        /* Touch Device Optimizations */
+        @media (hover: none) and (pointer: coarse) {
+            .slider-handle:hover {
+                transform: none;
+                box-shadow: 0 4px 15px rgba(32, 178, 170, 0.4);
+            }
+            
+            .navigation-buttons button:hover {
+                transform: none;
+            }
+        }
+
+        /* High DPI Displays */
+        @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx) {
+            .level-icon {
+                image-rendering: crisp-edges;
+            }
+        }
+
+        /* Landscape Mobile Orientation */
+        @media (max-width: 767px) and (orientation: landscape) {
+            .lesson-header h1 {
+                font-size: 2.2rem;
+            }
+            
+            .lesson-header h2 {
+                font-size: 1.5rem;
+            }
+            
+            main {
+                padding: 20px 25px;
+            }
+            
+            .lesson-header {
+                margin-bottom: 25px;
+            }
+            
+            .hierarchy-level {
+                flex-direction: row;
+                text-align: left;
+                min-height: 60px;
+            }
+            
+            .level-icon {
+                margin-right: 12px;
+                margin-bottom: 0;
+            }
+        }
+
+        /* Accessibility: Reduced Motion */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+            
+            .hierarchy-level {
+                transition: none;
+            }
+            
+            .completion-message {
+                transition: none;
+            }
+        }
+
+        /* Print Styles */
+        @media print {
+            .course-container {
+                background: white;
+            }
+            
+            header, footer {
+                display: none;
+            }
+            
+            .slider-track,
+            .slider-handle,
+            .slider-progress {
+                display: none;
+            }
+            
+            .hierarchy-levels {
+                margin-left: 0;
+            }
+            
+            .hierarchy-level {
+                opacity: 1 !important;
+                transform: none !important;
+                margin-bottom: 10px;
+                page-break-inside: avoid;
+            }
+            
+            .completion-message {
+                opacity: 1 !important;
+                transform: none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="course-container">
+        <header>
+            <div class="logo">Skill<span>Trail</span></div>
+            <div class="course-title">Health & Safety in the Workplace</div>
+        </header>
+
+        <main>
+            <div class="lesson-header">
+                <h1>Module 3: Risk Assessment and Control Measures</h1>
+                <h2>Lesson 3: Control Measures and the Hierarchy of Control</h2>
+            </div>
+
+            <div class="slider-container">
+                <div class="hierarchy-background">
+                    <div class="slider-track"></div>
+                    <div class="slider-progress"></div>
+                    <div class="slider-handle"></div>
+                    
+                    <div class="hierarchy-levels">
+                        <div class="hierarchy-level" data-level="1">
+                            <div class="level-icon">🚫</div>
+                            <div class="level-content">
+                                <div class="level-title">Eliminate the hazard</div>
+                                <div class="level-description">Remove the hazard completely from the workplace if possible — this is the most effective control measure.</div>
+                            </div>
+                            <div class="level-number">1</div>
+                        </div>
+
+                        <div class="hierarchy-level" data-level="2">
+                            <div class="level-icon">🔄</div>
+                            <div class="level-content">
+                                <div class="level-title">Substitute with something safer</div>
+                                <div class="level-description">If elimination isn't possible, replace the hazard with a safer alternative (e.g., use a less harmful substance or quieter machine).</div>
+                            </div>
+                            <div class="level-number">2</div>
+                        </div>
+
+                        <div class="hierarchy-level" data-level="3">
+                            <div class="level-icon">🛡️</div>
+                            <div class="level-content">
+                                <div class="level-title">Implement engineering controls</div>
+                                <div class="level-description">Use physical measures like guards, barriers, or ventilation systems to separate people from hazards.</div>
+                            </div>
+                            <div class="level-number">3</div>
+                        </div>
+
+                        <div class="hierarchy-level" data-level="4">
+                            <div class="level-icon">📋</div>
+                            <div class="level-content">
+                                <div class="level-title">Apply administrative controls</div>
+                                <div class="level-description">Change how work is organised by introducing procedures, signage, or training to reduce exposure to risks.</div>
+                            </div>
+                            <div class="level-number">4</div>
+                        </div>
+
+                        <div class="hierarchy-level" data-level="5">
+                            <div class="level-icon">🦺</div>
+                            <div class="level-content">
+                                <div class="level-title">Use personal protective equipment (PPE)</div>
+                                <div class="level-description">When risks can't be fully controlled, provide suitable PPE such as gloves, helmets, or safety goggles as a final line of defence.</div>
+                            </div>
+                            <div class="level-number">5</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="completion-message">
+                    🎉 Excellent! You've explored the complete hierarchy of control measures. Remember: start at the top (elimination) and work your way down for maximum safety effectiveness!
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <div class="lesson-info">Module 3 - Lesson 3</div>
+            <div class="navigation-buttons">
+                <a href="module3-lesson2.html"><button id="prev-btn">Previous Lesson</button></a>
+                <a href="index.html"><button>Back to Main Menu</button></a>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const sliderHandle = document.querySelector('.slider-handle');
+            const sliderTrack = document.querySelector('.slider-track');
+            const sliderProgress = document.querySelector('.slider-progress');
+            const hierarchyLevels = document.querySelectorAll('.hierarchy-level');
+            const completionMessage = document.querySelector('.completion-message');
+            const hierarchyBackground = document.querySelector('.hierarchy-background');
+            
+            let isDragging = false;
+            let trackHeight = 0;
+            let trackTop = 0;
+            let currentLevel = 0;
+
+            // Calculate track dimensions
+            function updateTrackDimensions() {
+                if (!sliderTrack || window.innerWidth <= 767) return;
+                const trackRect = sliderTrack.getBoundingClientRect();
+                trackHeight = trackRect.height - 22; // Handle height
+                trackTop = trackRect.top;
+            }
+
+            // Initialize
+            updateTrackDimensions();
+            window.addEventListener('resize', updateTrackDimensions);
+
+            // Only add slider functionality for desktop
+            if (window.innerWidth > 767) {
+                // Mouse down on handle
+                sliderHandle?.addEventListener('mousedown', (e) => {
+                    isDragging = true;
+                    e.preventDefault();
+                });
+
+                // Mouse move
+                document.addEventListener('mousemove', (e) => {
+                    if (!isDragging) return;
+
+                    const sliderRect = sliderTrack.getBoundingClientRect();
+                    const mouseY = e.clientY - sliderRect.top;
+                    const percentage = Math.max(0, Math.min(100, (mouseY / trackHeight) * 100));
+                    
+                    updateSliderPosition(percentage);
+                });
+
+                // Mouse up
+                document.addEventListener('mouseup', () => {
+                    isDragging = false;
+                });
+
+                // Touch events for mobile
+                sliderHandle?.addEventListener('touchstart', (e) => {
+                    isDragging = true;
+                    e.preventDefault();
+                });
+
+                document.addEventListener('touchmove', (e) => {
+                    if (!isDragging) return;
+
+                    const touch = e.touches[0];
+                    const sliderRect = sliderTrack.getBoundingClientRect();
+                    const touchY = touch.clientY - sliderRect.top;
+                    const percentage = Math.max(0, Math.min(100, (touchY / trackHeight) * 100));
+                    
+                    updateSliderPosition(percentage);
+                    e.preventDefault();
+                });
+
+                document.addEventListener('touchend', () => {
+                    isDragging = false;
+                });
+            }
+
+            function updateSliderPosition(percentage) {
+                if (window.innerWidth <= 767) return;
+                
+                // Update handle position
+                if (sliderHandle) {
+                    sliderHandle.style.top = (40 + (percentage / 100) * trackHeight) + 'px';
+                }
+                
+                // Update progress bar
+                if (sliderProgress) {
+                    sliderProgress.style.height = percentage + '%';
+                }
+                
+                // Reveal hierarchy levels
+                const levelToReveal = Math.floor((percentage / 100) * hierarchyLevels.length);
+                
+                hierarchyLevels.forEach((level, index) => {
+                    if (index <= levelToReveal) {
+                        setTimeout(() => {
+                            level.classList.add('revealed');
+                        }, index * 200); // Staggered reveal
+                    }
+                });
+
+                // Show completion message when fully revealed
+                if (levelToReveal >= hierarchyLevels.length - 1 && percentage > 95) {
+                    setTimeout(() => {
+                        completionMessage.classList.add('show');
+                    }, 1000);
+                }
+
+                currentLevel = levelToReveal;
+            }
+
+            // Auto-animate on load for demonstration (only on desktop)
+            if (window.innerWidth > 767) {
+                setTimeout(() => {
+                    let progress = 0;
+                    const autoAnimate = setInterval(() => {
+                        progress += 2;
+                        updateSliderPosition(progress);
+                        
+                        if (progress >= 100) {
+                            clearInterval(autoAnimate);
+                        }
+                    }, 50);
+                }, 1000);
+            } else {
+                // On mobile, show all levels immediately
+                hierarchyLevels.forEach(level => {
+                    level.classList.add('revealed');
+                });
+                setTimeout(() => {
+                    completionMessage.classList.add('show');
+                }, 500);
+            }
+        });
+    </script>
+
+</body>
+</html>

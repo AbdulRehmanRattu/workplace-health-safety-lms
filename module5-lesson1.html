@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module 5 Lesson 1 - Health & Safety in the Workplace</title>
+    <style>
+        /* --- Google Font Import --- */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+        /* --- CSS Variables --- */
+        :root {
+            --primary-color: #20B2AA;
+            --secondary-color: #008B8B;
+            --background-color: #f4f7f9;
+            --text-color: #333;
+            --light-gray-color: #e9ecef;
+            --white-color: #ffffff;
+            --success-color: #28a745;
+            --danger-color: #dc3545;
+            --font-family: 'Poppins', sans-serif;
+        }
+
+        /* --- General Reset --- */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        /* --- Main Course Container --- */
+        .course-container {
+            width: 100%;
+            min-height: 100vh;
+            background: var(--white-color);
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* --- Header --- */
+        header {
+            padding: 20px 40px;
+            border-bottom: 1px solid var(--light-gray-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-shrink: 0;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+        .logo span {
+            font-weight: 300;
+        }
+
+        .course-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            background-color: var(--primary-color);
+            color: var(--white-color);
+            padding: 12px 25px;
+            border-radius: 25px;
+            text-align: center;
+        }
+
+        /* --- Main Content Area --- */
+        main {
+            flex-grow: 1;
+            padding: 50px 60px;
+            background: linear-gradient(135deg, #f0f8ff, #f8f9fa);
+            width: 100%;
+        }
+
+        .lesson-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .lesson-header h1 {
+            font-size: 3.2rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            line-height: 1.2;
+        }
+
+        .lesson-header h2 {
+            font-size: 2rem;
+            color: var(--secondary-color);
+            font-weight: 400;
+            line-height: 1.3;
+        }
+
+        /* --- Timeline Interaction --- */
+        .timeline-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 0;
+        }
+
+        .timeline-path {
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 60px;
+            padding: 0 20px;
+        }
+
+        .timeline-line {
+            position: absolute;
+            top: 40px; /* Aligned to center of 80px circle */
+            left: 40px;
+            right: 40px;
+            height: 4px;
+            background-color: var(--light-gray-color);
+            border-radius: 2px;
+            z-index: 1;
+        }
+
+        .timeline-progress {
+            position: absolute;
+            top: 40px;
+            left: 40px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            border-radius: 2px;
+            z-index: 2;
+            width: 0%;
+            transition: width 1s ease;
+        }
+
+        .timeline-milestone {
+            position: relative;
+            z-index: 3;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .milestone-circle {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-color: var(--light-gray-color);
+            border: 4px solid var(--white-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .milestone-circle.active {
+            background-color: var(--primary-color);
+            transform: scale(1.2);
+            box-shadow: 0 6px 20px rgba(32, 178, 170, 0.4);
+            animation: glow 2s infinite alternate;
+        }
+
+        .milestone-circle.completed {
+            background-color: var(--success-color);
+            transform: scale(1.1);
+        }
+
+        @keyframes glow {
+            from { box-shadow: 0 6px 20px rgba(32, 178, 170, 0.4); }
+            to { box-shadow: 0 8px 25px rgba(32, 178, 170, 0.8); }
+        }
+
+        .milestone-icon {
+            font-size: 2rem;
+            color: white;
+            transition: transform 0.3s ease;
+        }
+
+        .milestone-circle:hover {
+            transform: scale(1.15);
+        }
+
+        .milestone-circle:hover .milestone-icon {
+            transform: rotate(10deg);
+        }
+
+        .milestone-label {
+            position: absolute;
+            top: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-color);
+            text-align: center;
+            white-space: nowrap;
+            max-width: 120px;
+        }
+
+        /* Content Area */
+        .content-area {
+            background: var(--white-color);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            border: 2px solid var(--light-gray-color);
+            min-height: 250px;
+            position: relative;
+        }
+
+        .content-text {
+            position: absolute;
+            top: 40px;
+            left: 40px;
+            right: 40px;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.4s ease;
+            font-size: 1.3rem;
+            line-height: 1.7;
+            color: var(--text-color);
+            pointer-events: none;
+        }
+
+        .content-text.active {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+
+        .content-placeholder {
+            text-align: center;
+            color: #6c757d;
+            font-size: 1.3rem;
+            font-style: italic;
+            margin-top: 60px;
+            position: absolute;
+            width: 100%;
+            left: 0;
+            padding: 0 20px;
+        }
+
+        .content-header {
+            font-size: 1.6rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .content-icon {
+            margin-right: 15px;
+            font-size: 2rem;
+        }
+
+        /* --- Footer & Navigation (Strictly Matching Previous Specs) --- */
+        footer {
+            padding: 20px 40px;
+            border-top: 1px solid var(--light-gray-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-shrink: 0;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .navigation-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .navigation-buttons button {
+            background-color: var(--primary-color);
+            color: var(--white-color);
+            border: none;
+            padding: 15px 35px; /* Exact match */
+            border-radius: 25px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            text-decoration: none;
+            display: inline-block;
+            min-width: 160px; /* Exact match */
+            text-align: center;
+        }
+
+        .navigation-buttons button:hover {
+            background-color: var(--secondary-color);
+            transform: scale(1.05);
+        }
+
+        .navigation-buttons a {
+            text-decoration: none;
+        }
+
+        #prev-btn {
+            background-color: #6c757d;
+        }
+        #prev-btn:hover {
+            background-color: #5a6268;
+        }
+
+        .lesson-info {
+            font-size: 1.1rem;
+            color: #6c757d;
+            font-weight: 500;
+        }
+
+        /* --- RESPONSIVE DESIGN --- */
+
+        /* Tablet (max 991px) */
+        @media (max-width: 991px) {
+            header {
+                padding: 18px 25px;
+            }
+            main {
+                padding: 30px 30px;
+            }
+            .lesson-header h1 {
+                font-size: 2.8rem;
+            }
+            .lesson-header h2 {
+                font-size: 1.8rem;
+            }
+        }
+
+        /* Mobile (max 768px) */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                text-align: center;
+                gap: 10px;
+            }
+
+            .lesson-header h1 {
+                font-size: 2.2rem;
+            }
+            .lesson-header h2 {
+                font-size: 1.4rem;
+            }
+
+            /* Stack timeline vertically on mobile */
+            .timeline-path {
+                flex-direction: column;
+                gap: 30px;
+                margin-bottom: 40px;
+            }
+
+            /* Hide the connecting line on mobile as it's hard to align vertically without fixed height */
+            .timeline-line,
+            .timeline-progress {
+                display: none;
+            }
+
+            .milestone-circle {
+                width: 70px;
+                height: 70px;
+            }
+
+            /* Fix label position for vertical stack */
+            .milestone-label {
+                position: static;
+                transform: none;
+                margin-top: 10px;
+                white-space: normal;
+                max-width: none;
+            }
+
+            .content-area {
+                padding: 30px 20px;
+                min-height: 300px; /* Taller min-height for stacked text */
+            }
+
+            .content-text {
+                position: absolute;
+                top: 30px;
+                left: 20px;
+                right: 20px;
+                font-size: 1.1rem;
+                transform: translateY(20px);
+            }
+
+            .content-text.active {
+                transform: translateY(0);
+            }
+
+            .content-header {
+                font-size: 1.3rem;
+            }
+
+            footer {
+                padding: 18px 25px;
+                flex-direction: column;
+                text-align: center;
+                gap: 15px;
+            }
+        }
+
+        /* Small Mobile (max 575px) - Matching Previous Footer Logic */
+        @media (max-width: 575px) {
+            header {
+                padding: 15px 20px;
+            }
+            
+            .course-title {
+                font-size: 1rem;
+                padding: 8px 16px;
+                white-space: normal;
+                line-height: 1.4;
+            }
+            
+            main {
+                padding: 20px 15px;
+            }
+            
+            .lesson-header h1 {
+                font-size: 1.8rem;
+            }
+
+            /* Footer Button Stacking Logic */
+            .lesson-info {
+                font-size: 1rem;
+                order: 2; /* Move text below buttons */
+            }
+
+            .navigation-buttons {
+                order: 1; /* Move buttons above text */
+                justify-content: center;
+                width: 100%;
+                flex-direction: column; /* Stack buttons */
+                gap: 10px;
+            }
+
+            .navigation-buttons button {
+                font-size: 1rem;
+                padding: 12px 20px;
+                width: 100%; /* Full width */
+                max-width: 250px;
+                margin: 0 auto;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="course-container">
+        <header>
+            <div class="logo">Skill<span>Trail</span></div>
+            <div class="course-title">Health & Safety in the Workplace</div>
+        </header>
+
+        <main>
+            <div class="lesson-header">
+                <h1>Module 5: Emergency Procedures and Incident Reporting</h1>
+                <h2>Lesson 1: What to Do in an Emergency</h2>
+            </div>
+
+            <div class="timeline-container">
+                <div class="timeline-path">
+                    <div class="timeline-line"></div>
+                    <div class="timeline-progress"></div>
+
+                    <div class="timeline-milestone" data-step="1">
+                        <div class="milestone-circle">
+                            <div class="milestone-icon">😌</div>
+                        </div>
+                        <div class="milestone-label">Stay Calm</div>
+                    </div>
+
+                    <div class="timeline-milestone" data-step="2">
+                        <div class="milestone-circle">
+                            <div class="milestone-icon">🚨</div>
+                        </div>
+                        <div class="milestone-label">Raise Alarm</div>
+                    </div>
+
+                    <div class="timeline-milestone" data-step="3">
+                        <div class="milestone-circle">
+                            <div class="milestone-icon">🚪</div>
+                        </div>
+                        <div class="milestone-label">Follow Routes</div>
+                    </div>
+
+                    <div class="timeline-milestone" data-step="4">
+                        <div class="milestone-circle">
+                            <div class="milestone-icon">🤝</div>
+                        </div>
+                        <div class="milestone-label">Assist Others</div>
+                    </div>
+
+                    <div class="timeline-milestone" data-step="5">
+                        <div class="milestone-circle">
+                            <div class="milestone-icon">📍</div>
+                        </div>
+                        <div class="milestone-label">Assembly Point</div>
+                    </div>
+                </div>
+
+                <div class="content-area">
+                    <div class="content-placeholder">
+                        👆 Click each step above to learn emergency procedures
+                    </div>
+
+                    <div class="content-text" id="content-1">
+                        <div class="content-header">
+                            <div class="content-icon">😌</div>
+                            Stay calm and assess the situation
+                        </div>
+                        Panic can make things worse. Take a moment to assess what's happening so you can respond safely and effectively.
+                    </div>
+
+                    <div class="content-text" id="content-2">
+                        <div class="content-header">
+                            <div class="content-icon">🚨</div>
+                            Raise the alarm
+                        </div>
+                        Alert others immediately by activating the nearest alarm system or notifying the appropriate person in charge.
+                    </div>
+
+                    <div class="content-text" id="content-3">
+                        <div class="content-header">
+                            <div class="content-icon">🚪</div>
+                            Follow evacuation routes
+                        </div>
+                        Use the designated emergency exits and avoid using lifts. Always follow the direction of fire wardens or emergency staff.
+                    </div>
+
+                    <div class="content-text" id="content-4">
+                        <div class="content-header">
+                            <div class="content-icon">🤝</div>
+                            Assist others if safe to do so
+                        </div>
+                        Help colleagues, visitors, or anyone who may need support, but never put yourself in danger.
+                    </div>
+
+                    <div class="content-text" id="content-5">
+                        <div class="content-header">
+                            <div class="content-icon">📍</div>
+                            Report to the assembly point
+                        </div>
+                        Once outside, go directly to the designated assembly point and wait until given further instructions or clearance to return.
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <div class="lesson-info">Module 5 - Lesson 1</div>
+            <div class="navigation-buttons">
+                <a href="index.html"><button id="prev-btn">Back to Main</button></a>
+                <a href="module5-lesson2.html"><button>Next Lesson</button></a>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const milestones = document.querySelectorAll('.timeline-milestone');
+            const contentTexts = document.querySelectorAll('.content-text');
+            const placeholder = document.querySelector('.content-placeholder');
+            const progressLine = document.querySelector('.timeline-progress');
+            let completedSteps = new Set();
+
+            milestones.forEach((milestone, index) => {
+                milestone.addEventListener('click', () => {
+                    const step = milestone.getAttribute('data-step');
+                    
+                    // Remove active state from all milestones
+                    milestones.forEach(m => {
+                        m.querySelector('.milestone-circle').classList.remove('active');
+                    });
+                    
+                    // Hide all content texts
+                    contentTexts.forEach(content => {
+                        content.classList.remove('active');
+                    });
+                    
+                    // Hide placeholder
+                    if (placeholder) {
+                        placeholder.style.display = 'none';
+                    }
+                    
+                    // Add active state to current milestone
+                    milestone.querySelector('.milestone-circle').classList.add('active');
+                    
+                    // Show corresponding content
+                    setTimeout(() => {
+                        const targetContent = document.getElementById(`content-${step}`);
+                        if (targetContent) {
+                            targetContent.classList.add('active');
+                        }
+                    }, 200);
+                    
+                    // Mark as completed and update progress
+                    completedSteps.add(parseInt(step));
+                    updateProgress();
+                    updateCompletedMilestones();
+                });
+            });
+
+            function updateProgress() {
+                // Progress bar only visible on desktop/tablet where line exists
+                if (window.innerWidth <= 768) return;
+
+                const totalSteps = milestones.length;
+                const completed = completedSteps.size;
+                const progressPercentage = (completed / totalSteps) * 90; // 90% max to leave space for last milestone
+                
+                if (progressLine) {
+                    progressLine.style.width = progressPercentage + '%';
+                }
+            }
+
+            function updateCompletedMilestones() {
+                milestones.forEach(milestone => {
+                    const step = parseInt(milestone.getAttribute('data-step'));
+                    const circle = milestone.querySelector('.milestone-circle');
+                    
+                    if (completedSteps.has(step) && !circle.classList.contains('active')) {
+                        circle.classList.add('completed');
+                    }
+                });
+            }
+        });
+    </script>
+
+</body>
+</html>

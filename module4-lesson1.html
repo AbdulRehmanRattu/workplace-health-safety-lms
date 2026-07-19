@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module 4 Lesson 1 - Health & Safety in the Workplace</title>
+    <style>
+        /* --- Google Font Import --- */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+        /* --- CSS Variables --- */
+        :root {
+            --primary-color: #20B2AA;
+            --secondary-color: #008B8B;
+            --background-color: #f4f7f9;
+            --text-color: #333;
+            --light-gray-color: #e9ecef;
+            --white-color: #ffffff;
+            --success-color: #28a745;
+            --danger-color: #dc3545;
+            --font-family: 'Poppins', sans-serif;
+        }
+
+        /* --- General Reset --- */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background-color: var(--background-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden; /* Prevent horizontal scroll */
+        }
+
+        /* --- Main Course Container --- */
+        .course-container {
+            width: 100%;
+            min-height: 100vh; /* changed from height to min-height for mobile scrolling */
+            background: var(--white-color);
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* --- Header --- */
+        header {
+            padding: 20px 40px;
+            border-bottom: 1px solid var(--light-gray-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-shrink: 0;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+        .logo span {
+            font-weight: 300;
+        }
+
+        .course-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            background-color: var(--primary-color);
+            color: var(--white-color);
+            padding: 12px 25px;
+            border-radius: 25px;
+            text-align: center;
+        }
+
+        /* --- Main Content Area --- */
+        main {
+            flex-grow: 1;
+            padding: 50px 60px;
+            position: relative;
+        }
+
+        .lesson-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .lesson-header h1 {
+            font-size: 3.2rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            line-height: 1.2;
+        }
+
+        .lesson-header h2 {
+            font-size: 2rem;
+            color: var(--secondary-color);
+            font-weight: 400;
+            line-height: 1.3;
+        }
+
+        /* --- Image Hotspot Interaction --- */
+        .workplace-image-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .workplace-illustration {
+            width: 100%;
+            height: 400px;
+            background: linear-gradient(45deg, #f1f3f4, #ffffff);
+            border-radius: 15px;
+            position: relative;
+            border: 2px solid var(--light-gray-color);
+            overflow: hidden; /* Ensures popups stay inside rounded corners if needed */
+        }
+
+        .workplace-illustration::before {
+            content: "🏭 WAREHOUSE & OFFICE ENVIRONMENT";
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #6c757d;
+            z-index: 1;
+            width: 90%;
+            text-align: center;
+        }
+
+        /* Hotspot Styling */
+        .hotspot {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background-color: var(--primary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(32, 178, 170, 0.4);
+            z-index: 10;
+            animation: pulse 2s infinite;
+        }
+
+        .hotspot::before {
+            content: '+';
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .hotspot:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(32, 178, 170, 0.6);
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(32, 178, 170, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(32, 178, 170, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(32, 178, 170, 0); }
+        }
+
+        /* Hotspot Positions */
+        .hotspot.manual-handling { top: 25%; left: 20%; }
+        .hotspot.safe-lifting { top: 35%; right: 25%; }
+        .hotspot.spills-trips { bottom: 30%; left: 30%; }
+        .hotspot.equipment { top: 45%; left: 45%; }
+        .hotspot.reporting { bottom: 25%; right: 20%; }
+
+        /* Pop-up Box */
+        .popup-box {
+            position: absolute;
+            background: var(--white-color);
+            border: 3px solid var(--primary-color);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+            max-width: 350px;
+            z-index: 20;
+            opacity: 0;
+            transform: scale(0.8);
+            transition: all 0.4s ease;
+            pointer-events: none;
+        }
+
+        .popup-box.active {
+            opacity: 1;
+            transform: scale(1); /* Default transform for desktop */
+            pointer-events: all;
+        }
+
+        .popup-header {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .popup-icon {
+            margin-right: 10px;
+            font-size: 1.5rem;
+        }
+
+        .popup-content {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: var(--text-color);
+        }
+
+        .close-popup {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: #999;
+            cursor: pointer;
+            transition: color 0.2s ease;
+        }
+
+        .close-popup:hover {
+            color: var(--danger-color);
+        }
+
+        /* --- Footer & Navigation (Strictly matching provided specs) --- */
+        footer {
+            padding: 20px 40px;
+            border-top: 1px solid var(--light-gray-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-shrink: 0;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .navigation-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .navigation-buttons button {
+            background-color: var(--primary-color);
+            color: var(--white-color);
+            border: none;
+            padding: 15px 35px; /* Exact match */
+            border-radius: 25px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            text-decoration: none;
+            display: inline-block;
+            min-width: 160px; /* Exact match */
+            text-align: center;
+        }
+
+        .navigation-buttons button:hover {
+            background-color: var(--secondary-color);
+            transform: scale(1.05);
+        }
+
+        .navigation-buttons a {
+            text-decoration: none;
+        }
+
+        #prev-btn {
+            background-color: #6c757d;
+        }
+        #prev-btn:hover {
+            background-color: #5a6268;
+        }
+
+        .lesson-info {
+            font-size: 1.1rem;
+            color: #6c757d;
+            font-weight: 500;
+        }
+
+        /* --- RESPONSIVE DESIGN (Enhanced) --- */
+
+        /* Tablet Portrait & Large Mobile (576px - 991px) */
+        @media (max-width: 991px) {
+            header {
+                padding: 18px 25px;
+            }
+
+            main {
+                padding: 30px 30px;
+            }
+
+            .lesson-header h1 {
+                font-size: 2.8rem;
+            }
+
+            .lesson-header h2 {
+                font-size: 1.8rem;
+            }
+            
+            .workplace-image-container {
+                padding: 20px;
+            }
+        }
+
+        /* Mobile & Small Tablet (Below 768px) */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                text-align: center;
+                gap: 10px;
+            }
+
+            .lesson-header h1 {
+                font-size: 2.2rem;
+            }
+            
+            .lesson-header h2 {
+                font-size: 1.4rem;
+            }
+            
+            .workplace-illustration {
+                height: 350px; /* Slight reduction */
+            }
+
+            /* Responsive Hotspot Popups logic */
+            .popup-box {
+                /* Override inline styles on mobile to center popup */
+                top: 50% !important;
+                left: 50% !important;
+                margin: 0 !important;
+                /* Center transform plus the scaling animation */
+                transform: translate(-50%, -50%) scale(0.8) !important;
+                width: 90%;
+                max-width: 320px;
+                z-index: 100;
+            }
+
+            .popup-box.active {
+                /* Active state transform */
+                transform: translate(-50%, -50%) scale(1) !important;
+            }
+
+            footer {
+                padding: 18px 25px;
+                flex-direction: column;
+                text-align: center;
+                gap: 15px;
+            }
+        }
+
+        /* Small Mobile (Below 575px) - Matches Previous Button Logic */
+        @media (max-width: 575px) {
+            header {
+                padding: 15px 20px;
+            }
+
+            .logo {
+                font-size: 1.5rem;
+            }
+
+            .course-title {
+                font-size: 1rem;
+                padding: 8px 16px;
+                white-space: normal;
+                line-height: 1.4;
+            }
+
+            main {
+                padding: 20px 15px;
+            }
+
+            .lesson-header h1 {
+                font-size: 1.8rem;
+            }
+
+            .workplace-illustration {
+                height: 300px;
+            }
+
+            .workplace-illustration::before {
+                font-size: 1rem;
+                width: 95%;
+            }
+
+            /* Footer Button Stacking Logic */
+            .lesson-info {
+                font-size: 1rem;
+                order: 2; /* Move text below buttons */
+            }
+
+            .navigation-buttons {
+                order: 1; /* Move buttons above text */
+                justify-content: center;
+                width: 100%;
+                flex-direction: column; /* Stack buttons */
+                gap: 10px;
+            }
+
+            .navigation-buttons button {
+                font-size: 1rem;
+                padding: 12px 20px;
+                width: 100%; /* Full width */
+                max-width: 250px;
+                margin: 0 auto;
+            }
+            
+            .hotspot {
+                width: 40px;
+                height: 40px;
+            }
+            
+            .popup-content {
+                font-size: 0.95rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="course-container">
+        <header>
+            <div class="logo">Skill<span>Trail</span></div>
+            <div class="course-title">Health & Safety in the Workplace</div>
+        </header>
+
+        <main>
+            <div class="lesson-header">
+                <h1>Module 4: Safe Working Practices and Equipment Use</h1>
+                <h2>Lesson 1: Manual Handling and Preventing Slips, Trips, and Falls</h2>
+            </div>
+
+            <div class="workplace-image-container">
+                <div class="workplace-illustration">
+                    <div class="hotspot manual-handling" data-safety="manual-handling"></div>
+                    
+                    <div class="hotspot safe-lifting" data-safety="safe-lifting"></div>
+                    
+                    <div class="hotspot spills-trips" data-safety="spills-trips"></div>
+                    
+                    <div class="hotspot equipment" data-safety="equipment"></div>
+                    
+                    <div class="hotspot reporting" data-safety="reporting"></div>
+
+                    <div class="popup-box" id="popup-manual-handling" style="top: 15%; left: 5%;">
+                        <button class="close-popup">&times;</button>
+                        <div class="popup-header">
+                            <span class="popup-icon">📦</span>
+                            Understanding manual handling
+                        </div>
+                        <div class="popup-content">
+                            Manual handling includes lifting, carrying, pushing, or pulling loads. Poor technique can lead to strains, sprains, or long-term back injuries.
+                        </div>
+                    </div>
+
+                    <div class="popup-box" id="popup-safe-lifting" style="top: 25%; right: 5%;">
+                        <button class="close-popup">&times;</button>
+                        <div class="popup-header">
+                            <span class="popup-icon">🏋️</span>
+                            Safe lifting techniques
+                        </div>
+                        <div class="popup-content">
+                            Plan the lift, bend your knees (not your back), keep the load close to your body, and avoid twisting while carrying heavy items.
+                        </div>
+                    </div>
+
+                    <div class="popup-box" id="popup-spills-trips" style="bottom: 20%; left: 5%;">
+                        <button class="close-popup">&times;</button>
+                        <div class="popup-header">
+                            <span class="popup-icon">⚠️</span>
+                            Preventing slips, trips, and falls
+                        </div>
+                        <div class="popup-content">
+                            Keep floors clear, clean up spills immediately, and ensure cables or tools are stored properly to avoid accidents.
+                        </div>
+                    </div>
+
+                    <div class="popup-box" id="popup-equipment" style="top: 35%; left: 25%;">
+                        <button class="close-popup">&times;</button>
+                        <div class="popup-header">
+                            <span class="popup-icon">🚛</span>
+                            Using the right equipment
+                        </div>
+                        <div class="popup-content">
+                            Use mechanical aids like trolleys or lifting devices where possible. Never lift more than you can handle safely.
+                        </div>
+                    </div>
+
+                    <div class="popup-box" id="popup-reporting" style="bottom: 15%; right: 5%;">
+                        <button class="close-popup">&times;</button>
+                        <div class="popup-header">
+                            <span class="popup-icon">📢</span>
+                            Reporting hazards promptly
+                        </div>
+                        <div class="popup-content">
+                            If you notice uneven floors, loose mats, or poor lighting, report it straight away to prevent others from getting hurt.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <div class="lesson-info">Module 4 - Lesson 1</div>
+            <div class="navigation-buttons">
+                <a href="index.html"><button id="prev-btn">Back to Main</button></a>
+                <a href="module4-lesson2.html"><button>Next Lesson</button></a>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const hotspots = document.querySelectorAll('.hotspot');
+            const popups = document.querySelectorAll('.popup-box');
+            const closeButtons = document.querySelectorAll('.close-popup');
+
+            // Hotspot click events
+            hotspots.forEach(hotspot => {
+                hotspot.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const safetyType = hotspot.getAttribute('data-safety');
+                    
+                    // Close all popups first
+                    popups.forEach(popup => popup.classList.remove('active'));
+                    
+                    // Open the corresponding popup
+                    const targetPopup = document.getElementById(`popup-${safetyType}`);
+                    if (targetPopup) {
+                        setTimeout(() => {
+                            targetPopup.classList.add('active');
+                        }, 100);
+                    }
+                });
+            });
+
+            // Close button events
+            closeButtons.forEach(button => {
+                button.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const popup = button.closest('.popup-box');
+                    popup.classList.remove('active');
+                });
+            });
+
+            // Click outside to close popups
+            document.addEventListener('click', (e) => {
+                if (!e.target.closest('.popup-box') && !e.target.closest('.hotspot')) {
+                    popups.forEach(popup => popup.classList.remove('active'));
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
