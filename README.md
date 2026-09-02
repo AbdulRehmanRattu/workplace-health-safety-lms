@@ -1,5 +1,19 @@
 # Workplace Health and Safety Learning Management System (LMS)
 
+<div align="center">
+
+[<img src="https://img.shields.io/badge/License-Apache_2.0-blue.svg" alt="License">](https://opensource.org/licenses/Apache-2.0)
+<img src="https://img.shields.io/badge/Python-3.10%20%7C%203.11%20%7C%203.12-3776AB.svg?logo=python&logoColor=white" alt="Python">
+<img src="https://img.shields.io/badge/Status-Production%20Ready-brightgreen.svg" alt="Status">
+
+**Enterprise-grade, high-performance implementation built and maintained by Abdul Rehman Rattu.**
+
+[Overview](#overview) • [Key Features](#key-features) • [Installation & Usage](#quickstart--usage) • [Author & Maintainer](#author--maintainer)
+
+</div>
+
+---
+
 A web-based, interactive Learning Management System (LMS) designed for corporate Workplace Health and Safety training. Built with modern HTML5, CSS3, and JavaScript, this application delivers a structured 6-module curriculum alongside an interactive final assessment engine.
 
 ---
@@ -107,14 +121,14 @@ The application is engineered to run seamlessly across all modern web browsers w
 
 ---
 
-## Author & Contact Information
-
-* **Developer**: Abdul Rehman Rattu
-* **Email**: rattu786.ar@gmail.com
-* **LinkedIn**: [https://www.linkedin.com/in/abdul-rehman-rattu-395bba237](https://www.linkedin.com/in/abdul-rehman-rattu-395bba237)
-
 ---
 
-## License
+## Author & Maintainer
 
-This project is licensed under the MIT License. Free for corporate training, personal, and educational use.
+**Abdul Rehman Rattu**  
+*Forward Deployed AI Engineer & Solutions Architect*  
+*Founder & Technical Lead, Rapide Technologies*
+
+* **Email**: [rattu786.ar@gmail.com](mailto:rattu786.ar@gmail.com)
+* **LinkedIn**: [linkedin.com/in/abdul-rehman-rattu-395bba237](https://www.linkedin.com/in/abdul-rehman-rattu-395bba237)
+* **GitHub**: [github.com/AbdulRehmanRattu](https://github.com/AbdulRehmanRattu)
