@@ -3,12 +3,13 @@
 <div align="center">
 
 [<img src="https://img.shields.io/badge/License-Apache_2.0-blue.svg" alt="License">](https://opensource.org/licenses/Apache-2.0)
-<img src="https://img.shields.io/badge/Python-3.10%20%7C%203.11%20%7C%203.12-3776AB.svg?logo=python&logoColor=white" alt="Python">
+<img src="https://img.shields.io/badge/Full%20Stack-HTML5%20%7C%20CSS3%20%7C%20JavaScript-E34F26.svg?logo=html5&logoColor=white" alt="HTML5">
+<img src="https://img.shields.io/badge/Enterprise-LMS%20Safety%20Platform-0052FF.svg" alt="LMS">
 <img src="https://img.shields.io/badge/Status-Production%20Ready-brightgreen.svg" alt="Status">
 
 **Enterprise-grade, high-performance implementation built and maintained by Abdul Rehman Rattu.**
 
-[Overview](#overview) • [Key Features](#key-features) • [Installation & Usage](#quickstart--usage) • [Author & Maintainer](#author--maintainer)
+[Overview](#overview) • [Key Features](#key-features) • [Installation & Usage](#quickstart--deployment) • [Author & Maintainer](#author--maintainer)
 
 </div>
 
@@ -118,6 +119,8 @@ The application is engineered to run seamlessly across all modern web browsers w
 2. Select the **Pages** menu item from the left sidebar.
 3. Under **Branch**, select `main` (or `master`) and set the root folder to `/ (root)`.
 4. Click **Save**. The live web application will deploy automatically.
+
+---
 
 ---
 
